@@ -1,0 +1,133 @@
+/* ================================================================ */
+/* =========================== GENERAL ============================ */
+/* ================================================================ */
+@font-face {
+  font-family: 'Tahoma XP';
+  src: url('/assets/windows-xp-tahoma.woff') format('woff'), 'Chrome 6+', 'Firefox 3.6+', 'IE 9+', 'Safari 5.1+'
+       url('/assets/windows-xp-tahoma.ttf') format('truetype');
+} 
+
+body {
+  margin: 0;
+
+  font-family: 'Tahoma';
+  /* font-size: 11px; */
+  font-size: 12px;
+
+  /* background-color: #007F7F; */
+  /* position: absolute; */
+}
+/* ================================================================ */
+/* =========================== DESKTOP ============================ */
+/* ================================================================ */
+#desktop {
+  position: absolute;
+  background-color: #007F7F;
+  height: 100vh;
+  width: 100vw;
+  /* padding: 16px; */
+}
+/* Dekstop Icon */
+.d-icon {
+  width: 64px;
+  height: 64px;
+  margin: 32px;
+  color: #F7F7F7;
+}
+.d-icon img {
+  width: 32px;
+  height: 32px;
+  margin: 8px 16px 8px;
+  /* top right bottom left */
+  /* top R/L bottom */
+}
+.d-icon span {
+  display: inline-block;
+  width: 64px;
+  height: 16px;
+  text-align: center;
+}
+/* ================================================================ */
+/* =========================== WINDOWS ============================ */
+/* ================================================================ */
+#windows {
+  position: absolute;
+
+  height: 100vh;
+  width: 100vw;
+}
+#windows .window {
+  position: absolute;
+  background-color: #7F7F7F;
+  width: 200px;
+  height: 200px;
+  border: 1px solid #FFFFFF;
+
+  touch-action: none;
+  user-select: none;
+
+  box-sizing: border-box;
+}
+#windows .window .title-bar {
+  background-color: #0000FF;
+  height: 20px;
+}
+/* ================================================================ */
+/* ============================ HEADER ============================ */
+/* ================================================================ */
+header {
+  /* background-color: red; */
+  padding: 0;
+  margin: 0;
+}
+header h2 {
+  margin: 0;
+  padding: 20px 10px;
+}
+/* ================================================================ */
+/* =========================== NAV MENU =========================== */
+/* ================================================================ */
+navmenu {
+  /* background-color: aqua; */
+  /* margin: 10px; */
+  border: solid 1px #000000;
+  width: 200px
+}
+navmenu a {
+  padding: 10px;
+  /* padding-top: 10px; */
+}
+navmenu ul {
+  margin: 0;
+}
+navmenu li {
+  margin: 0;
+}
+
+/* ================================================================ */
+/* ============================ CONTENT =========================== */
+/* ================================================================ */
+content {
+  background-color: blue;
+  flex: 1;
+}
+
+
+/* ================================================================ */
+/* ============================= BLOG ============================= */
+/* ================================================================ */
+/* =============== blog ============ */
+.blogpost::after {
+  /* fix smaller images */
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+
+
+
+footer {
+  background-color: brown;
+}
