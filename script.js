@@ -1,9 +1,28 @@
 
 
+// get html components into text
+function getComponent(path) {
+  fetch(path)
+    .then(response => response.text())
+    .then(data => {
+      return data;
+    })
+    .catch(error => {
+      return `Faled to load ${path}: ${error}`;
+    })
+}
 
 
-
-
+// const formatString = (template, ...args) => {
+//   return template.replace(/{([0-9]+)}/g, function (match, index) {
+//     return typeof args[index] === 'undefined' ? match : args[index];
+//   });
+// }
+const formatString = (template, data) => {
+  return template.replace(/{{\s*([\w]+)\s*}}/g, (match, key) => {
+    return typeof data[key] !== 'undefined' ? data[key] : match;
+  });
+};
 
 
 
@@ -21,6 +40,44 @@ function btn_minimize(target) {
 }
 function btn_maximize(target) {
   // maximize target
+  // if maximized... return to before size
+  
+  if (target.getAttribute('maximized') == 'true') {
+    // MINIMIZE
+    target.setAttribute('maximized', false);
+
+    var x = target.getAttribute('maxi-x');
+    var y = target.getAttribute('maxi-y');
+    target.style.transform = `translate(${ x }px, ${ y }px)`
+    
+    target.setAttribute('data-x', x)
+    target.setAttribute('data-y', y)
+
+    target.style.width = target.getAttribute('maxi-w') + 'px';
+    target.style.height = target.getAttribute('maxi-h') + 'px';
+  } 
+  else {
+    // MAXIMIZE
+    target.setAttribute('maximized', true);
+
+    target.setAttribute('maxi-x', target.getAttribute('data-x'));
+    target.setAttribute('maxi-y', target.getAttribute('data-y'));
+    target.setAttribute('maxi-w', target.offsetWidth);
+    target.setAttribute('maxi-h', target.offsetHeight);
+
+    target.style.transform = 'translate(0px, 0px)';
+    target.setAttribute('data-x', 0);
+    target.setAttribute('data-y', 0);
+    
+    target.style.width = target.parentElement.offsetWidth + 'px';
+    target.style.height = target.parentElement.offsetHeight + 'px';
+  }
+  
+
+
+  
+
+  
 }
 function btn_close(target) {
   // close target
@@ -31,57 +88,103 @@ window.btn_maximize = btn_maximize;
 window.btn_close = btn_close;
 
 
+const windows_container = document.getElementById('windows');
+const temp_div = document.createElement('div');
 
+// function init_window(init_x, init_y, title="Window", content="blank content", min_width=300, min_height=200) {
+async function init_window(title="Window",
+                    content="blank content",
+                    init_x=0, 
+                    init_y=0, 
+                    min_width=300, 
+                    min_height=200) {
 
-window.onload = (event) => {
+  // MOVE CODE FROM window.onload
+  // var window = getComponent('/components/window.html');
+
+  if (content.endsWith('.html')) {
+    
+    // LOAD HTML COMPONENT
+    await fetch(content)
+      .then(response => response.text())
+      .then(data => {
+        content = data
+      })
+      .catch(error => {
+        content = `Faled to load ${path}: ${error}`;
+      })
+  }
+  var window = 
+ `<div class="window draggable" id="blog">
+    <div class="title-bar">
+      <span class="title">${ title }</span>
+      <div class="buttons">
+        <!-- <div class="button" onclick="btn_question(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#000000" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
+        </div> -->
+        <div class="button" onclick="btn_minimize(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#000000" d="M2 9h7M2 10h7" /></svg>
+        </div>
+        <div class="button" onclick="btn_maximize(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
+        </div>
+        <div class="button" onclick="btn_close(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      ${ content }
+    </div>
+  </div>`
   
-  const url_params = new URLSearchParams(window.location.search);
+  // turn string into element
+  temp_div.innerHTML = window;
+  window = temp_div.firstChild;
+  temp_div.innerHTML = "";
+  windows_container.appendChild(window);
 
-  switch (url_params.get('page')) {
-    case 'projects':
-      console.log("onload: 'Loading #projects'")
-      break;
-    case 'blog':
-      console.log("onload: 'Loading #blog'")
-      break;
+
+  var x = init_x;
+  var y = init_y;
+
+
+
+  window.setAttribute('maximized', false);
+
+  // window.style.zIndex = n++;
+  window.style.zIndex = windows_container.children.length;
+  window.setAttribute('data-x', x);
+  window.setAttribute('data-y', y);
+  window.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  x = x + 32;
+  y = y + 26;
+  
+
+  window.addEventListener('mousedown', (event) => {
+    // console.log("YOOO");
+    // console.log(window);
+    moveWindowToFront(window);
+  });
+  
+
+  if (window.querySelector('.content').hasAttribute('inject')) {
+    // HAS INJECT PATH
+    var content = window.querySelector('.content');
+    fetch(content.getAttribute('inject'))
+      .then(response => response.text())
+      .then(data => {
+        content.innerHTML = data;
+      })
+      .catch(error => {
+        content.innerHTML = `Faled to load ${content.getAttribute('inject')}: ${error}`
+      })
   }
 
 
 
-
-  // make windows draggable
-
-  // draggable = new PlainDraggable(document.getElementById('draggable'));
-  var n = 0;
-  var x = 40;
-  var y = 40;
-  document.querySelectorAll('.window').forEach(function(window) {
-    // new PlainDraggable(window);
-    // window.classList.add('yoo');
-    // console.log("YOOOO");
-
-    // new PlainDraggable(window, 
-    //   {
-    //     handle: window.querySelector('.toptab')
-    //   }
-    // );
-    window.style.zIndex = n++;
-    window.setAttribute('data-x', x);
-    window.setAttribute('data-y', y);
-    window.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-    x = x + 32;
-    y = y + 26;
-    
-
-    window.addEventListener('mousedown', (event) => {
-      // console.log("YOOO");
-      // console.log(window);
-      moveWindowToFront(window);
-    })
-    
-  })
-
-  interact('.window')
+  // interact('.window')
+  interact(window)
     .draggable({
       // intertia: true,
       allowFrom: '.title-bar',
@@ -109,26 +212,25 @@ window.onload = (event) => {
     .resizable({
       // resize from all edges and corners
       edges: { left: true, right: true, bottom: true, top: true },
-  
+
       listeners: {
         move (event) {
           var target = event.target
           var x = (parseFloat(target.getAttribute('data-x')) || 0)
           var y = (parseFloat(target.getAttribute('data-y')) || 0)
-  
+
           // update the element's style
           target.style.width = event.rect.width + 'px'
           target.style.height = event.rect.height + 'px'
-  
+
           // translate when resizing from top or left edges
           x += event.deltaRect.left
           y += event.deltaRect.top
-  
+
           target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-  
+
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
-          // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
         }
       },
       modifiers: [
@@ -136,10 +238,11 @@ window.onload = (event) => {
         interact.modifiers.restrictEdges({
           outer: 'parent'
         }),
-  
+
         // minimum size
         interact.modifiers.restrictSize({
-          min: { width: 100, height: 50 }
+          // min: { width: 300, height: 200 }
+          min: { width: min_width, height: min_height }
         })
       ],
       
@@ -147,6 +250,19 @@ window.onload = (event) => {
       // padding: 20
       // inertia: true
     })
+  
+
+
+
+  // toggle style to match width
+  ////////// ADD A WIDTH PARAMETER
+  window.style.width = min_width + 'px';
+  window.style.height = min_height + 'px';
+
+
+
+
+
 
   function dragMoveListener (event) {
     var target = event.target
@@ -160,13 +276,12 @@ window.onload = (event) => {
     // update the posiion attributes
     target.setAttribute('data-x', x)
     target.setAttribute('data-y', y)
-  }
-  
 
-  
-  
-  
-  
+    moveWindowToFront(target)
+  }
+    
+    
+    
   function moveWindowToFront(target) {
     var n = 0;
 
@@ -178,5 +293,33 @@ window.onload = (event) => {
     });
     target.style.zIndex = Number(target.style.zIndex) + n;
   }
+}
+
+
+window.onload = async (event) => {
+  
+  // const url_params = new URLSearchParams(window.location.search);
+
+  // switch (url_params.get('page')) {
+  //   case 'projects':
+  //     console.log("onload: 'Loading #projects'")
+  //     break;
+  //   case 'blog':
+  //     console.log("onload: 'Loading #blog'")
+  //     break;
+  // }
+
+  
+  await init_window("Connor's Blog", "/pages/blog.html", 100, 100, 500, 500)
+  await init_window("Window 2", "", 140, 140)
+  await init_window("Window 3", "", 180, 180)
+  await init_window("Window 4", "", 220, 220)
+  
+
+  
+
+  
   
 }
+
+
