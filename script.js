@@ -89,15 +89,21 @@ window.btn_close = btn_close;
 
 
 const windows_container = document.getElementById('windows');
+const desktop_container = document.getElementById('desktop');
 const temp_div = document.createElement('div');
 
 // function init_window(init_x, init_y, title="Window", content="blank content", min_width=300, min_height=200) {
 async function init_window(title="Window",
                     content="blank content",
+                    icon="/assets/icon_test.png",
                     init_x=0, 
                     init_y=0, 
                     min_width=300, 
-                    min_height=200) {
+                    min_height=200,
+                    btn_question = false,
+                    btn_minimize = true,
+                    btn_maximize = true,
+                    btn_close = true) {
 
   // MOVE CODE FROM window.onload
   // var window = getComponent('/components/window.html');
@@ -117,21 +123,28 @@ async function init_window(title="Window",
   var window = 
  `<div class="window draggable" id="blog">
     <div class="title-bar">
-      <span class="title">${ title }</span>
-      <div class="buttons">
-        <!-- <div class="button" onclick="btn_question(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#000000" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
-        </div> -->
-        <div class="button" onclick="btn_minimize(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#000000" d="M2 9h7M2 10h7" /></svg>
-        </div>
-        <div class="button" onclick="btn_maximize(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
-        </div>
-        <div class="button" onclick="btn_close(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
-        </div>
+      <div class="titles">
+        <img class="w-icon" src="${ icon }">
+        <span class="title">${ title }</span>
       </div>
+      <div class="buttons">`
+      + (btn_question ?  
+        `<div class="button" onclick="btn_question(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#FFF" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
+        </div>` : '')
+      + (btn_minimize ?
+        `<div class="button" onclick="btn_minimize(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M2 9h7M2 10h7" /></svg>
+        </div>` : '')
+      + (btn_maximize ?
+        `<div class="button" onclick="btn_maximize(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
+        </div>` : '')
+      + (btn_close ? 
+        `<div class="button close" onclick="btn_close(this.closest('.window'));">
+          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#FFF" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
+        </div>` : '') +
+      `</div>
     </div>
     <div class="content">
       ${ content }
@@ -293,8 +306,32 @@ async function init_window(title="Window",
     });
     target.style.zIndex = Number(target.style.zIndex) + n;
   }
-}
+}// init_window
 
+
+
+
+
+
+
+
+function init_desktopIcon(title="Title of my app",
+                          icon="/assets/icon_test.png",
+                          onclick="console.log('clicked')") {
+  
+  var icon = 
+  `<div class="d-icon">
+    <div>
+      <img src="${ icon }">
+    </div>
+    <span>${ title }</span>
+  </div>`
+  // turn string into element
+  temp_div.innerHTML = icon;
+  icon = temp_div.firstChild;
+  temp_div.innerHTML = "";
+  desktop_container.appendChild(icon);
+}
 
 window.onload = async (event) => {
   
@@ -310,16 +347,31 @@ window.onload = async (event) => {
   // }
 
   
-  await init_window("Connor's Blog", "/pages/blog.html", 100, 100, 500, 500)
-  await init_window("Window 2", "", 140, 140)
-  await init_window("Window 3", "", 180, 180)
-  await init_window("Window 4", "", 220, 220)
+  
+  await init_window("Window 2", "", "/assets/icons/recycle.png", 140, 140);
+  await init_window("Window 3", "", "/assets/icon_test.png", 180, 180);
+  await init_window("Window 4", "", "/assets/icon_test.png", 220, 220);
+  await init_window("Connor's Blog", "/pages/blog.html", "/assets/icon_test.png", 230, 230, 500, 100);
+
+  // await init_window("Chimp Want Banana - itch.io", `<iframe frameborder="0" src="https://itch.io/embed-upload/3392649?color=2b5754" allowfullscreen="" width="1044" height="808"><a href="https://alphaq.itch.io/chimp-want-banana">Play Chimp Want Banana on itch.io</a></iframe>`, 200, 200, 1044, 808);
+  // await init_window("Chimp Want Banana", `<iframe style="transform: scale(0.5) translate(-522px, -404px);" frameborder="0" src="https://itch.io/embed-upload/3392649?color=2b5754" allowfullscreen="" width="1044" height="808"><a href="https://alphaq.itch.io/chimp-want-banana">Play Chimp Want Banana on itch.io</a></iframe>`, 200, 200, 522, 404);
+
+  // await init_window("Bodyguard - itch.io", `<iframe frameborder="0" src="https://itch.io/embed-upload/2182069?color=637598" allowfullscreen="" width="1024" height="788"><a href="https://alphaq.itch.io/bodyguard-ld46">Play Bodyguard on itch.io</a></iframe>`, 400, 300, 1024, 788)
   
 
   
-
-  
-  
+  init_desktopIcon("MY NEW APP");
+  init_desktopIcon();
+  init_desktopIcon();
+  init_desktopIcon();
+  init_desktopIcon();
+  init_desktopIcon();
+  init_desktopIcon();
+  init_desktopIcon();
+  init_desktopIcon();
+  init_desktopIcon('Recycling', '/assets/icons/recycle.png');
+  init_desktopIcon('Chimp Want Banana', '/assets/icons/chimp_32.png');
+  init_desktopIcon('Bodyguard', '/assets/icons/prez_32.png');
 }
 
 

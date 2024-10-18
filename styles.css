@@ -2,8 +2,11 @@
 /* ======================= COLOUR PALETTE ========================= */
 /* ================================================================ */
 :root {
-  --window-border-light: #e1e1e1;
-  --window-border-dark: #b0b0b0;
+
+  /* --window-border-light: #e1e1e1; */
+  /* --window-border-dark: #b0b0b0; */
+  --window-border-light: #0831D9;
+  --window-border-dark: #0831D9;
 }
 /* ================================================================ */
 /* =========================== GENERAL ============================ */
@@ -47,12 +50,16 @@ body {
   height: 100vh;
   width: 100vw;
   /* padding: 16px; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
 /* Dekstop Icon */
 .d-icon {
   width: 64px;
   height: 64px;
-  margin: 32px;
+  margin: 16px;
   color: #F7F7F7;
 }
 .d-icon img {
@@ -79,7 +86,7 @@ body {
 }
 #windows .window {
   position: absolute;
-  background-color: #7F7F7F;
+  background-color: #0831D9;
   width: 300px;
   height: 200px;
   /* border: 1px solid #FFFFFF; */
@@ -93,10 +100,11 @@ body {
 
   /* border: 4px solid #FFFFFF; */
   /* border: 2px outset #DDDDDD; */
-  border-top: 3px solid var(--window-border-light);
+
+  /* border-top: 3px solid var(--window-border-light);
   border-left: 3px solid var(--window-border-light);
   border-right: 3px solid var(--window-border-dark);
-  border-bottom: 3px solid var(--window-border-dark);
+  border-bottom: 3px solid var(--window-border-dark); */
   
   /* min-width: 200px; */
   /* min-height: 200px; */
@@ -104,15 +112,25 @@ body {
   
   /* display: inline-block; */
   /* min-width: max-content; */
+
+  border-radius: 16px 16px 0 0;
+  
 }
 
 #windows .window .title-bar {
   /* background-color: #0000FF; */
-  background: linear-gradient(90deg, rgba(53,71,157,1) 0%, rgba(198,246,255,1) 100%);;
+  /* background: linear-gradient(90deg, rgba(53,71,157,1) 0%, rgba(198,246,255,1) 100%); */
+  /* background: #0056E3; */
+  /* background: linear-gradient(#358FFF 0%, #0368FB 50%); */
+  /* #2C90FF
+  #0831D9
+  #0164F2
+  #003599 */
+  background: linear-gradient(#2C90FF 0%, #0831D9 15%, #0164F2 90%, #003599 100%);
 
-  height: 24px;
+  height: 28px;
   /* interact.js seems to affect this for some reason */
-  min-height: 24px; 
+  min-height: 28px; 
   color: #FFFFFF;
 
   font-weight: 600;
@@ -121,28 +139,51 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: center; */
-  padding: 0px 4px 0;
+  align-items: center;
+  padding: 0 4px 0;
   
+  border-radius: 8px 8px 0 0;
 }
-#windows .window .title-bar .title {
+#windows .window .title-bar .titles {
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+}
+#windows .window .title-bar .titles .w-icon {
+  /* padding: 0 4px; */
+  width: 16px;
+  height: 16px;
+}
+#windows .window .title-bar .titles .title {
+  /* padding: 0 4px; */
+  padding-left: 6px;
   white-space: nowrap;
 }
 #windows .window .title-bar .buttons {
   display: flex;
   flex-direction: row;
+  align-items: end;
+  height: 100%;
+  padding-bottom: 2px;
 }
 #windows .window .title-bar .buttons .button {
-  background-color: #CFCFCF;
-  width: 16px;
-  height: 16px;
-  margin: 2px;
+  /* background-color: #CFCFCF; */
+  background: linear-gradient(135deg, #93AAEE 0%, #0A53E9 30%);
+
+  width: 20px;
+  height: 20px;
+  margin: 0.5px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   border: 1px outset #EFEFEF;
+  border-radius: 2px;
+}
+#windows .window .title-bar .buttons .button.close {
+  background: linear-gradient(135deg, #F9B99A 0%, #D04501 30%);
+  
 }
 #windows .window .title-bar .buttons .button:hover:active {
   border: 1px inset #EFEFEF;
@@ -154,24 +195,29 @@ body {
   height: 100%;
   /* border: 4px solid; */
   /* border: 2px inset #DDDDDD; */
-  border-top: 2px solid var(--window-border-dark);
-  border-left: 2px solid var(--window-border-dark);
-  border-right: 2px solid var(--window-border-light);
-  border-bottom: 2px solid var(--window-border-light);
+  /* border-top: 4px solid var(--window-border-dark); */
+  border-left: 4px solid var(--window-border-dark);
+  border-right: 4px solid var(--window-border-light);
+  border-bottom: 4px solid var(--window-border-light);
 
-  background-color: #FFFFFF;
-  background-color: #000;
+  /* background-color: #FFFFFF; */
+  background-color: #FFF;
 
   color: white;
 
-  overflow: scroll;
+  /* overflow: scroll; */
+  /* overflow-y: scroll; */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* border-radius: 20px 0 20px 20px; */
 }
 /* ================================================================ */
 /* ============================= PAGES ============================ */
 /* ================================================================ */
 /* BLOG */
-#blog .content {
-  background-color: #F00;
+#blog {
+  background-color: #FFF;
   color:#000;
 
   /* min-width: 500px; */
