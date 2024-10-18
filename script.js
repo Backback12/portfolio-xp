@@ -103,6 +103,7 @@ async function init_window(title="Window",
                     btn_question = false,
                     btn_minimize = true,
                     btn_maximize = true,
+                    btn_unmaximize = false,
                     btn_close = true) {
 
   // MOVE CODE FROM window.onload
@@ -130,19 +131,43 @@ async function init_window(title="Window",
       <div class="buttons">`
       + (btn_question ?  
         `<div class="button" onclick="btn_question(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#FFF" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
+          <!--<svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#FFF" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>-->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.5 12 12" shape-rendering="crispEdges">
+            <metadata>Made with Pixels to Svg https://codepen.io/shshaw/pen/XbxvNj</metadata>
+            <path stroke="#ffffff" d="M4 2h5M3 3h2M8 3h1M8 4h1M6 5h3M6 6h1M6 7h1M6 10h1" />
+          </svg>
         </div>` : '')
       + (btn_minimize ?
         `<div class="button" onclick="btn_minimize(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M2 9h7M2 10h7" /></svg>
+          <!--<svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M2 9h7M2 10h7" /></svg>-->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.5 12 12" shape-rendering="crispEdges">
+            <metadata>Made with Pixels to Svg https://codepen.io/shshaw/pen/XbxvNj</metadata>
+            <path stroke="#ffffff" d="M0 9h8M0 10h8M0 11h8" />
+          </svg>
         </div>` : '')
       + (btn_maximize ?
         `<div class="button" onclick="btn_maximize(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
+          <!--<svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>-->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.5 12 12" shape-rendering="crispEdges">
+            <metadata>Made with Pixels to Svg https://codepen.io/shshaw/pen/XbxvNj</metadata>
+            <path stroke="#ffffff" d="M0 0h12M0 1h12M0 2h12M0 3h1M11 3h1M0 4h1M11 4h1M0 5h1M11 5h1M0 6h1M11 6h1M0 7h1M11 7h1M0 8h1M11 8h1M0 9h1M11 9h1M0 10h1M11 10h1M0 11h12" />
+          </svg>
+        </div>` : '')
+      + (btn_unmaximize ?
+        `<div class="button" onclick="btn_maximize(this.closest('.window'));">
+          <!--<svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>-->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.5 12 12" shape-rendering="crispEdges">
+            <metadata>Made with Pixels to Svg https://codepen.io/shshaw/pen/XbxvNj</metadata>
+            <path stroke="#ffffff" d="M3 0h8M3 1h8M10 2h1M0 3h8M10 3h1M0 4h8M10 4h1M0 5h1M7 5h1M10 5h1M0 6h1M7 6h1M10 6h1M0 7h1M7 7h1M9 7h2M0 8h1M7 8h1M0 9h1M7 9h1M0 10h8" />
+          </svg>
         </div>` : '')
       + (btn_close ? 
         `<div class="button close" onclick="btn_close(this.closest('.window'));">
-          <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#FFF" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
+          <!--<svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#FFF" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>-->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.5 12 12" shape-rendering="crispEdges">
+            <metadata>Made with Pixels to Svg https://codepen.io/shshaw/pen/XbxvNj</metadata>
+            <path stroke="#ffffff" d="M0 0h2M10 0h2M0 1h3M9 1h3M1 2h3M8 2h3M2 3h3M7 3h3M3 4h6M4 5h4M4 6h4M3 7h6M2 8h3M7 8h3M1 9h3M8 9h3M0 10h3M9 10h3M0 11h2M10 11h2" />
+          </svg>
         </div>` : '') +
       `</div>
     </div>
@@ -177,7 +202,7 @@ async function init_window(title="Window",
   window.addEventListener('mousedown', (event) => {
     // console.log("YOOO");
     // console.log(window);
-    moveWindowToFront(window);
+    setActiveWindow(window);
   });
   
 
@@ -290,22 +315,29 @@ async function init_window(title="Window",
     target.setAttribute('data-x', x)
     target.setAttribute('data-y', y)
 
-    moveWindowToFront(target)
+    setActiveWindow(target)
   }
     
     
     
-  function moveWindowToFront(target) {
+  function setActiveWindow(target) {
     var n = 0;
 
     document.querySelectorAll('.window').forEach(function(window) {
+      window.classList.remove('active');
       if (window.style.zIndex > target.style.zIndex) {
         window.style.zIndex = Number(window.style.zIndex) - 1;
         n += 1;
       }  
     });
+    target.classList.add('active');
     target.style.zIndex = Number(target.style.zIndex) + n;
   }
+
+
+
+
+  setActiveWindow(window);
 }// init_window
 
 

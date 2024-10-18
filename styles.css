@@ -47,6 +47,9 @@ body {
 #desktop {
   position: absolute;
   background-color: #007F7F;
+  background-image: url('/assets/images/wallpaper_0.jpg');
+  background-size: contain;
+
   height: 100vh;
   width: 100vw;
   /* padding: 16px; */
@@ -126,7 +129,13 @@ body {
   #0831D9
   #0164F2
   #003599 */
-  background: linear-gradient(#2C90FF 0%, #0831D9 15%, #0164F2 90%, #003599 100%);
+
+  /* background: linear-gradient(#2C90FF 0%, #0831D9 15%, #0164F2 90%, #003599 100%); */
+  background: linear-gradient(#8FABE7 0%, #7998DF 15%, #80A4E7 90%, #7A95E0 100%);
+  
+  
+  
+  
 
   height: 28px;
   /* interact.js seems to affect this for some reason */
@@ -168,7 +177,7 @@ body {
 }
 #windows .window .title-bar .buttons .button {
   /* background-color: #CFCFCF; */
-  background: linear-gradient(135deg, #93AAEE 0%, #0A53E9 30%);
+  background: linear-gradient(135deg, #89A2E8 0%, #4074EB 30%);
 
   width: 20px;
   height: 20px;
@@ -178,27 +187,38 @@ body {
   align-items: center;
   justify-content: center;
 
-  border: 1px outset #EFEFEF;
-  border-radius: 2px;
+  border: 1px solid #EFEFEF;
+  border-radius: 3px;
+}
+#windows .window .title-bar .buttons .button svg {
+  width: 12px;
+  height: 12px;
 }
 #windows .window .title-bar .buttons .button.close {
-  background: linear-gradient(135deg, #F9B99A 0%, #D04501 30%);
-  
+  background: linear-gradient(135deg, #C6ABB5 0%, #A8665E 30%);   
 }
-#windows .window .title-bar .buttons .button:hover:active {
-  border: 1px inset #EFEFEF;
+/* inactive hover */
+#windows .window .title-bar .buttons .button:hover {
+  background: linear-gradient(135deg, #9AB7F2 0%, #447CF6 30%);
+}
+#windows .window .title-bar .buttons .button.close:hover {
+  background: linear-gradient(135deg, #CAC2C7 0%, #C26C5C 30%);   
+}
 
-  transform: translate(1px, 1px);
-}
 
 #windows .window .content {
   height: 100%;
   /* border: 4px solid; */
   /* border: 2px inset #DDDDDD; */
   /* border-top: 4px solid var(--window-border-dark); */
-  border-left: 4px solid var(--window-border-dark);
-  border-right: 4px solid var(--window-border-light);
-  border-bottom: 4px solid var(--window-border-light);
+  /* border-left: 4px solid var(--window-border-dark); */
+  /* border-right: 4px solid var(--window-border-light); */
+  /* border-bottom: 4px solid var(--window-border-light); */
+
+  
+  border-left: 4px solid #7998DF;
+  border-right: 4px solid #7998DF;
+  border-bottom: 4px solid #7998DF;
 
   /* background-color: #FFFFFF; */
   background-color: #FFF;
@@ -212,6 +232,42 @@ body {
 
   /* border-radius: 20px 0 20px 20px; */
 }
+/* ======= ACTIVE WINDOW ======= */
+#windows .window.active .title-bar {
+  background: linear-gradient(#2C90FF 0%, #0831D9 15%, #0164F2 90%, #003599 100%);
+  /* background: #000; */
+}
+#windows .window.active .title-bar .buttons .button {
+  background: linear-gradient(135deg, #93AAEE 0%, #0A53E9 30%);
+  /* background: #000; */
+}
+#windows .window.active .title-bar .buttons .button.close {
+  background: linear-gradient(135deg, #F9B99A 0%, #D04501 30%);
+  /* background: #000; */
+}
+#windows .window.active .content {
+  border-left: 4px solid #0831D9;
+  border-right: 4px solid #0831D9;
+  border-bottom: 4px solid #0831D9;
+}
+/* active hover */
+#windows .window.active .title-bar .buttons .button:hover {
+  background: linear-gradient(135deg, #B0CCFF 0%, #1C5FFF 30%);
+}
+#windows .window.active .title-bar .buttons .button.close:hover {
+  background: linear-gradient(135deg, #FFDEB8 0%, #FB5301 30%);   
+}
+#windows .window:active .title-bar .buttons .button:hover:active {
+  background: linear-gradient(135deg, #8499D6 0%, #2045DC 30%);
+  border: 1px solid #d2d2d2;
+}
+#windows .window:active .title-bar .buttons .button.close:hover:active {
+  background: linear-gradient(135deg, #E0A68A 0%, #C23F00 30%);   
+  border: 1px solid #d2d2d2;
+}
+
+
+
 /* ================================================================ */
 /* ============================= PAGES ============================ */
 /* ================================================================ */
