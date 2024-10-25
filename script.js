@@ -124,7 +124,7 @@ async function init_window(title="Window",
       })
   }
   var window = 
- `<div class="window draggable" id="blog">
+ `<div class="window draggable">
     <div class="title-bar">
       <div class="titles">
         <img class="w-icon" src="${ icon }">
@@ -378,6 +378,26 @@ function init_desktopIcon(title="Title of my app",
   temp_div.innerHTML = "";
   desktop_container.appendChild(icon);
 }
+
+
+
+
+const TASKBAR_TIME = document.getElementById('time');
+setInterval(() => {
+  
+  // var time_now = new Date("1995-12-17T00:54:00");
+  var time_now = new Date();
+  
+
+  TASKBAR_TIME.innerHTML = (
+    ((time_now.getHours() + 11) % 12 + 1) + ":" + 
+    String(time_now.getMinutes()).padStart(2, '0') + " " + 
+    (time_now.getHours() >= 12 ? 'PM' : 'AM')
+  );
+}, 1000);
+
+
+
 
 window.onload = async (event) => {
   

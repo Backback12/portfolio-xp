@@ -11,7 +11,7 @@
 /* ================================================================ */
 /* =========================== GENERAL ============================ */
 /* ================================================================ */
-@font-face {
+/* @font-face {
   font-family: 'TahomaXP';
   src: url('/assets/tahoma-xp.woff') format('woff'), 'Chrome 6+', 'Firefox 3.6+', 'IE 9+', 'Safari 5.1+'
        url('/assets/tahoma-xp.ttf') format('truetype');
@@ -20,7 +20,7 @@
   font-family: 'Tahoma';
   src: url('/assets/tahoma.woff') format('woff'), 'Chrome 6+', 'Firefox 3.6+', 'IE 9+', 'Safari 5.1+'
        url('/assets/tahoma.ttf') format('truetype');
-}
+} */
 
 body {
   margin: 0;
@@ -222,6 +222,7 @@ body {
 
 #windows .window .title-bar .buttons .button.close {
   background: linear-gradient(135deg, #C6ABB5 0%, #A8665E 30%);   
+  margin-left: 2px;
 }
 /* inactive hover */
 #windows .window .title-bar .buttons .button:hover {
@@ -360,7 +361,7 @@ body {
 }
 #taskbar #start-btn {
   /* background: green; */
-  background: linear-gradient(90deg, #2A7A2A 0%, #0000 20%, #0000 80%, #2A7A2A 100%), linear-gradient(#358335 0%, #57A257 10%, #4EA24E 10%, #49AE49 85%, #2E713E 100%);
+  background: linear-gradient(90deg, #2A7A2A 0%, #0000 20%, #0000 80%, #2A7A2A 100%), linear-gradient(#358335 0%, #57A257 5%, #4EA24E 15%, #49AE49 85%, #2E713E 100%);
   width: 100px;
 
   border-radius: 0 8px 8px 0 / 15px ;
@@ -370,7 +371,9 @@ body {
 #taskbar #start-btn img {
   width: 18px;
   height: 18px;
-  padding: 0 7px;
+  /* padding: 0 7px; */
+  padding-left: 10px;
+  padding-right: 6px;
 }
 #taskbar #start-btn a {
   color: #ffffff;
@@ -381,6 +384,7 @@ body {
   text-shadow: 0px 0px 6px #000A;
 }
 #taskbar #task-tabs {
+  flex-grow: 4;
   margin-left: 20px;
   display: flex;
   flex-direction: row;
@@ -405,6 +409,25 @@ body {
   color: #ffffff;
 }
 
+#taskbar #task-notifs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  /* background: #f00; */
+  background: #64a4ff;
+  color: white;
+
+  padding: 0 5px;
+}
+#taskbar #task-notifs img {
+  width: 16px;
+  height: 16px;
+  padding: 0 3px;
+}
+#taskbar #task-notifs #time {
+  padding: 0 6px;
+}
 /* ================================================================ */
 /* ============================= PAGES ============================ */
 /* ================================================================ */
