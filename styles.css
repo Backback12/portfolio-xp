@@ -67,6 +67,8 @@ body {
   background-color: #007F7F;
   background-image: url('/assets/images/wallpaper_0.jpg');
   background-size: contain;
+  /* background-size: cover; */
+  /* background-position: center; */
 
   /* height: 100vh; */
   /* height: 100%; */
@@ -108,8 +110,12 @@ body {
   /* height: 100%; */
   height: inherit;
   width: 100vw;
+
+
+  pointer-events: none;
 }
 #windows .window {
+  
   position: absolute;
   background-color: #0831D9;
   width: 300px;
@@ -139,7 +145,12 @@ body {
   /* min-width: max-content; */
 
   border-radius: 16px 16px 0 0;
+
+  margin: 0;
+  padding: 0;
   
+
+  pointer-events: all;
 }
 
 #windows .window .title-bar {
@@ -266,7 +277,9 @@ body {
   /* border-right: 4px solid var(--window-border-light); */
   /* border-bottom: 4px solid var(--window-border-light); */
 
-  
+  padding: 0; 
+  margin: 0;
+
   border-left: 4px solid #7998DF;
   border-right: 4px solid #7998DF;
   border-bottom: 4px solid #7998DF;
@@ -278,15 +291,23 @@ body {
 
   /* overflow: scroll; */
   /* overflow-y: scroll; */
-  overflow-y: auto;
+
+  
   overflow-x: hidden;
+  /* overflow-y: auto; */
+  overflow-y: hidden;
 
   /* border-radius: 20px 0 20px 20px; */
 }
+#windows .window .content:has(.scroll-y) {
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;  
+}
+
 /* ======= ACTIVE WINDOW ======= */
 #windows .window.active {
-  /* -webkit-box-shadow: 0px 0px 27px 0px #000000AF;  */
-  /* box-shadow: 0px 0px 16px 0px #000000AF; */
+  -webkit-box-shadow: 0px 0px 16px 0px #0000007F; 
+  box-shadow: 0px 0px 16px 0px #0000007F;
   
 }
 #windows .window.active .title-bar {
@@ -426,7 +447,9 @@ body {
   padding: 0 3px;
 }
 #taskbar #task-notifs #time {
-  padding: 0 6px;
+  /* padding-left: 6px; */
+  width: 64px;
+  text-align: right;
 }
 /* ================================================================ */
 /* ============================= PAGES ============================ */
@@ -501,6 +524,21 @@ content {
 
 
 
-footer {
-  background-color: brown;
+/* ================================================================ */
+/* ============================= OTHER ============================= */
+/* ================================================================ */
+/* .scroll-x {
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
+.scroll-y {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.scroll-xy {
+  overflow-x: scroll;
+  overflow-y: scroll;
+} */
+
+
+

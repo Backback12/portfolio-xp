@@ -189,12 +189,31 @@ async function init_window(title="Window",
     </div>
   </div>`
   
+  /*
+  find a way to insert window buttons like
+  {"File": 
+    {
+      "Save As...": "console.log('CLICKED')", 
+      "Exit": "console.log('EXIT')"
+    }
+  }
+*/
   // turn string into element
   temp_div.innerHTML = window;
   window = temp_div.firstChild;
-  temp_div.innerHTML = "";
+  
   windows_container.appendChild(window);
 
+  // remove then add <script> to execute them
+  const scripts = window.querySelectorAll('script');
+  scripts.forEach(script => {
+    const inlineScript = document.createElement('script');
+    inlineScript.textContent = script.textContent;
+    script.remove();
+    window.appendChild(inlineScript);
+  });
+
+  temp_div.innerHTML = "";
 
   var x = init_x;
   var y = init_y;
@@ -363,20 +382,33 @@ async function init_window(title="Window",
 
 function init_desktopIcon(title="Title of my app",
                           icon="/assets/icon_test.png",
-                          onclick="console.log('clicked')") {
+                          onclick=() => {console.log('clicked')}) {
   
   var icon = 
   `<div class="d-icon">
     <div>
-      <img src="${ icon }">
+      <img class="icon" src="${ icon }">
     </div>
-    <span>${ title }</span>
+    <span class="title">${ title }</span>
   </div>`
   // turn string into element
   temp_div.innerHTML = icon;
   icon = temp_div.firstChild;
   temp_div.innerHTML = "";
+  
+  icon.addEventListener('click', () => {
+    // handle single click
+  });
+  icon.addEventListener('dblclick', () => {
+    // handle double click
+    
+    onclick();
+  });
+
+
   desktop_container.appendChild(icon);
+
+  
 }
 
 
@@ -399,6 +431,17 @@ setInterval(() => {
 
 
 
+
+
+window.addEventListener('click', function(event) {
+  // `event.target` will give you the element that was clicked
+  const clickedElement = event.target;
+  console.log('Element clicked:', clickedElement);
+  
+  // You can now perform any action based on the clicked element
+});
+
+
 window.onload = async (event) => {
   
   // const url_params = new URLSearchParams(window.location.search);
@@ -414,10 +457,10 @@ window.onload = async (event) => {
 
   
   
-  await init_window("Window 2", "", "/assets/icons/recycle.png", 140, 140);
-  await init_window("Window 3", "", "/assets/icon_test.png", 180, 180);
-  await init_window("Window 4", "", "/assets/icon_test.png", 220, 220);
-  await init_window("Connor's Blog", "/pages/blog.html", "/assets/icon_test.png", 230, 230, 500, 100);
+  await init_window("Window 2", "<embed src='https://www.umrt.ca', style='width:100%; height:100%; padding:0; margin:0;'>", "/assets/icons/recycle.png", 140, 140);
+  await init_window("Window 3", "<embed src='https://backback12.github.io', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
+  await init_window("Window 4", "<embed src='http://localhost:5500', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
+  await init_window("Connor's Blog", "/pages/blog.html", "/assets/icon_test.png", 230, 230, 500, 400);
 
   // await init_window("Chimp Want Banana - itch.io", `<iframe frameborder="0" src="https://itch.io/embed-upload/3392649?color=2b5754" allowfullscreen="" width="1044" height="808"><a href="https://alphaq.itch.io/chimp-want-banana">Play Chimp Want Banana on itch.io</a></iframe>`, 200, 200, 1044, 808);
   // await init_window("Chimp Want Banana", `<iframe style="transform: scale(0.5) translate(-522px, -404px);" frameborder="0" src="https://itch.io/embed-upload/3392649?color=2b5754" allowfullscreen="" width="1044" height="808"><a href="https://alphaq.itch.io/chimp-want-banana">Play Chimp Want Banana on itch.io</a></iframe>`, 200, 200, 522, 404);
@@ -426,15 +469,15 @@ window.onload = async (event) => {
   
 
   
-  init_desktopIcon("MY NEW APP");
-  init_desktopIcon();
-  init_desktopIcon();
-  init_desktopIcon();
-  init_desktopIcon();
-  init_desktopIcon();
-  init_desktopIcon();
-  init_desktopIcon();
-  init_desktopIcon();
+  // init_desktopIcon("MY NEW APP");
+  // init_desktopIcon();
+  // init_desktopIcon();
+  // init_desktopIcon();
+  // init_desktopIcon();
+  // init_desktopIcon();
+  // init_desktopIcon();
+  // init_desktopIcon();
+  // init_desktopIcon();
   init_desktopIcon('Recycling', '/assets/icons/recycle.png');
   init_desktopIcon('Chimp Want Banana', '/assets/icons/chimp_32.png');
   init_desktopIcon('Bodyguard', '/assets/icons/prez_32.png');

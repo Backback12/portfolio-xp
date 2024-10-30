@@ -1,9 +1,35 @@
-<div id="blog">
-   first
+<div id="blog" class="scroll-y">
+<script>
+console.log("LOADED BLOG");
+document.querySelectorAll('.blogpost').forEach(function(blog_post) {
+  // Now do something with my button
+  blog_post.addEventListener('click', function(event) {
+    console.log('CLICKED BLOG POST');
+  });
+
+});
+</script>
+  first
   <h1>Blog</h1>
   <p>
      Hello just stuff
   </p>
+  <div class="blogpost" style="background-color: #f5f5f5; padding: 5px; margin: 15px 0px">
+   <h1>IEEExtreme and UMEC 2024</h1>
+   <i>October 25-26, 2024</i>
+   <p>
+      Competed in IEEExtreme 18.0, then competed in the University of Manitoba Engineering Competition (UMEC) 2024.
+      Our team won first place! So we're moving on to WEC 2025!
+   </p>
+ </div>
+  <div class="blogpost" style="background-color: #f5f5f5; padding: 5px; margin: 15px 0px">
+   <h1>University of Manitoba Robotics Team (UMRT)</h1>
+   <i>00000 00, 2024</i>
+   <p>
+      I was lucky enough to be part of the first team of the University of Manitoba Robotics Team (UMRT)
+      founded by a group of friends looking to start the University's robotics team.
+   </p>
+ </div>
   <div class="blogpost" style="background-color: #f5f5f5; padding: 5px; margin: 15px 0px">
    <h1>Canadian International Rover Challenge (CIRC)</h1>
    <i>00000 00, 2024</i>
