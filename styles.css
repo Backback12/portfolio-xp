@@ -379,6 +379,7 @@ body {
   display: flex;
   flex-direction: row;
   
+  z-index: 999;
 }
 #taskbar #start-btn {
   /* background: green; */
@@ -428,6 +429,10 @@ body {
 }
 #taskbar #task-tabs .task-tab a {
   color: #ffffff;
+}
+#taskbar #task-tabs .task-tab.active {
+  background: #1E52B7;
+  border: 1px inset #001331;
 }
 
 #taskbar #task-notifs {
@@ -539,6 +544,13 @@ content {
   overflow-x: scroll;
   overflow-y: scroll;
 } */
+
+.inline-img {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0 4px;
+}
 
 
 

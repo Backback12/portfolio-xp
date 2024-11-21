@@ -56,6 +56,8 @@ function btn_maximize(target) {
 
     target.style.width = target.getAttribute('maxi-w') + 'px';
     target.style.height = target.getAttribute('maxi-h') + 'px';
+
+    target.querySelector('.button.maximize svg').innerHTML = '<path d="M0 0h12M0 1h12M0 2h12M0 3h1M11 3h1M0 4h1M11 4h1M0 5h1M11 5h1M0 6h1M11 6h1M0 7h1M11 7h1M0 8h1M11 8h1M0 9h1M11 9h1M0 10h1M11 10h1M0 11h12" />'
   } 
   else {
     // MAXIMIZE
@@ -73,6 +75,8 @@ function btn_maximize(target) {
     
     target.style.width = target.parentElement.offsetWidth + 'px';
     target.style.height = target.parentElement.offsetHeight + 'px';
+
+    target.querySelector('.button.maximize svg').innerHTML = '<path d="M3 0h8M3 1h8M10 2h1M0 3h8M10 3h1M0 4h8M10 4h1M0 5h1M7 5h1M10 5h1M0 6h1M7 6h1M10 6h1M0 7h1M7 7h1M9 7h2M0 8h1M7 8h1M0 9h1M7 9h1M0 10h8" />'
   }
   
 
@@ -82,8 +86,14 @@ function btn_maximize(target) {
   
 }
 function btn_close(target) {
-  // close target
-  target.remove();
+  
+  const window_id = target.getAttribute('window-id')
+  // remove all targets with window-id
+  for (const elem of document.querySelectorAll(`[window-id="${ window_id }"]`)) {
+    elem.remove();
+  }
+  
+  
 }
 window.btn_minimize = btn_minimize;
 window.btn_maximize = btn_maximize;
@@ -93,6 +103,8 @@ window.btn_close = btn_close;
 const windows_container = document.getElementById('windows');
 const desktop_container = document.getElementById('desktop');
 const temp_div = document.createElement('div');
+const tasktab_container = document.getElementById('task-tabs');
+
 
 // function init_window(init_x, init_y, title="Window", content="blank content", min_width=300, min_height=200) {
 async function init_window(title="Window",
@@ -108,8 +120,8 @@ async function init_window(title="Window",
                     btn_unmaximize = false,
                     btn_close = true) {
 
-  // MOVE CODE FROM window.onload
-  // var window = getComponent('/components/window.html');
+  // GENERATE UNIQUE ID
+  const window_id = Date.now();
 
   if (content.endsWith('.html')) {
     
@@ -148,7 +160,7 @@ async function init_window(title="Window",
           </svg>
         </div>` : '')
       + (btn_maximize ?
-        `<div class="button" onclick="btn_maximize(this.closest('.window'));">
+        `<div class="button maximize" onclick="btn_maximize(this.closest('.window'));">
           <!--<svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 -0.5 12 12" shape-rendering="crispEdges"><path stroke="#FFF" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>-->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.5 12 12" shape-rendering="crispEdges">
             <metadata>Made with Pixels to Svg https://codepen.io/shshaw/pen/XbxvNj</metadata>
@@ -189,6 +201,7 @@ async function init_window(title="Window",
     </div>
   </div>`
   
+  
   /*
   find a way to insert window buttons like
   {"File": 
@@ -218,6 +231,8 @@ async function init_window(title="Window",
   var x = init_x;
   var y = init_y;
 
+
+  window.setAttribute('window-id', window_id);
 
 
   window.setAttribute('maximized', false);
@@ -348,32 +363,87 @@ async function init_window(title="Window",
     target.setAttribute('data-x', x)
     target.setAttribute('data-y', y)
 
-    setActiveWindow(target)
+    // setActiveWindow(target)
+    setFocus(target);
   }
     
     
     
-  function setActiveWindow(target) {
-    var n = 0;
+  // INSERT TASKBAR TAB
+  // var tasktab = `<div class="task-tab"><img src="/assets/icon_test.png"><a>Notebook</a></div>`;
+  var tasktab = 
+  `<div class="task-tab">
+    <img class="w-icon" src="${ icon }">
+    <a>${ title }</a>
+  </div>`;
 
+  // turn string into element
+  temp_div.innerHTML = tasktab;
+  tasktab = temp_div.firstChild;
+
+  tasktab.setAttribute('window-id', window_id);
+  tasktab_container.appendChild(tasktab);
+  
+  
+  temp_div.innerHTML = "";
+
+
+
+
+
+
+  // setActiveWindow(window);
+  setFocus(window);
+}// init_window
+
+
+function setActiveWindow(target) {
+  var n = 0;
+
+  document.querySelectorAll('.window').forEach(function(window) {
+    window.classList.remove('active');
+    if (window.style.zIndex > target.style.zIndex) {
+      window.style.zIndex = Number(window.style.zIndex) - 1;
+      n += 1;
+    }  
+  });
+  target.classList.add('active');
+  target.style.zIndex = Number(target.style.zIndex) + n;
+}
+
+
+function setFocus(target) {
+  var n = 0;
+
+  
+  if (target.classList.contains('window')) {
+    // if window selected
     document.querySelectorAll('.window').forEach(function(window) {
       window.classList.remove('active');
       if (window.style.zIndex > target.style.zIndex) {
         window.style.zIndex = Number(window.style.zIndex) - 1;
         n += 1;
-      }  
+      }
     });
     target.classList.add('active');
     target.style.zIndex = Number(target.style.zIndex) + n;
+
+
+    // set taskbar tab to active
+    document.querySelectorAll('.task-tab').forEach(function(tasktab) {
+      tasktab.classList.remove('active');
+    });
+    const window_id = target.getAttribute('window-id');
+    document.querySelectorAll(`[window-id="${ window_id }"]`).forEach(function(tasktab) {
+      tasktab.classList.add('active');
+    });
   }
-
-
-
-
-  setActiveWindow(window);
-}// init_window
-
-
+  else {
+    document.querySelectorAll('.window').forEach(function(window) {
+      window.classList.remove('active');
+    });
+  }
+}
 
 
 
@@ -436,9 +506,24 @@ setInterval(() => {
 window.addEventListener('click', function(event) {
   // `event.target` will give you the element that was clicked
   const clickedElement = event.target;
-  console.log('Element clicked:', clickedElement);
+  // console.log('Element clicked:', clickedElement);
   
+
   // You can now perform any action based on the clicked element
+
+  // find closest:
+  //    window
+  //    desktop
+  const foundElem = clickedElement.closest('.window, #desktop, .d-icon');
+  // console.log('Element found:', foundElem);
+
+  if (foundElem != null) {
+    setFocus(foundElem);
+  }
+  else {
+    // found elem is null
+    // deselect all?
+  } 
 });
 
 
