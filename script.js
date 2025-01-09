@@ -452,7 +452,7 @@ function setFocus(target) {
 
 function init_desktopIcon(title="Title of my app",
                           icon="/assets/icon_test.png",
-                          onclick=() => {console.log('clicked')}) {
+                          clickevent=function(){console.log('clicked')}) {
   
   var icon = 
   `<div class="d-icon">
@@ -472,7 +472,7 @@ function init_desktopIcon(title="Title of my app",
   icon.addEventListener('dblclick', () => {
     // handle double click
     
-    onclick();
+    clickevent();
   });
 
 
@@ -542,10 +542,12 @@ window.onload = async (event) => {
 
   
   
-  await init_window("Window 2", "<embed src='https://www.umrt.ca', style='width:100%; height:100%; padding:0; margin:0;'>", "/assets/icons/recycle.png", 140, 140);
-  await init_window("Window 3", "<embed src='https://backback12.github.io', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
-  await init_window("Window 4", "<embed src='http://localhost:5500', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
+  // await init_window("Window 2", "<embed src='https://www.umrt.ca', style='width:100%; height:100%; padding:0; margin:0;'>", "/assets/icons/recycle.png", 140, 140);
+  // await init_window("Window 3", "<embed src='https://backback12.github.io', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
+  // await init_window("Window 4", "<embed src='http://localhost:5500', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
   await init_window("Connor's Blog", "/pages/blog.html", "/assets/icon_test.png", 230, 230, 500, 400);
+  await init_window("Milestones", "/pages/milestones.html", "/assets/icon_test.png", 330, 330, 500, 400);
+  // await init_window("threejs", "/pages/3d.html", "/assets/icon_test.png", 430, 430, 500, 400);
 
   // await init_window("Chimp Want Banana - itch.io", `<iframe frameborder="0" src="https://itch.io/embed-upload/3392649?color=2b5754" allowfullscreen="" width="1044" height="808"><a href="https://alphaq.itch.io/chimp-want-banana">Play Chimp Want Banana on itch.io</a></iframe>`, 200, 200, 1044, 808);
   // await init_window("Chimp Want Banana", `<iframe style="transform: scale(0.5) translate(-522px, -404px);" frameborder="0" src="https://itch.io/embed-upload/3392649?color=2b5754" allowfullscreen="" width="1044" height="808"><a href="https://alphaq.itch.io/chimp-want-banana">Play Chimp Want Banana on itch.io</a></iframe>`, 200, 200, 522, 404);
@@ -565,7 +567,10 @@ window.onload = async (event) => {
   // init_desktopIcon();
   init_desktopIcon('Recycling', '/assets/icons/recycle.png');
   init_desktopIcon('Chimp Want Banana', '/assets/icons/chimp_32.png');
-  init_desktopIcon('Bodyguard', '/assets/icons/prez_32.png');
+  init_desktopIcon('Bodyguard', '/assets/icons/prez_32.png', function(){
+    init_window("Connor's Blog", "/pages/blog.html", "/assets/icon_test.png", 230, 230, 500, 400);
+    // console.log("WHAT IS THIS")
+  });
 }
 
 

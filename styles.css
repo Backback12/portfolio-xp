@@ -287,7 +287,7 @@ body {
   /* background-color: #FFFFFF; */
   background-color: #FFF;
 
-  color: white;
+  /* color: white; */
 
   /* overflow: scroll; */
   /* overflow-y: scroll; */
@@ -465,6 +465,7 @@ body {
   color:#000;
 
   /* min-width: 500px; */
+  padding: 20px;
 }
 
 
@@ -526,6 +527,25 @@ content {
 }
 
 
+.blogpostnew {
+  /* background: red; */
+  padding: 30px 0;
+  /* display: flex; */
+  /* flex-direction: column; */
+}
+.blogpostnew .blog-title {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #aaa;
+}
+.blogpostnew h1 {
+  margin: 4px;
+}
+.blogpostnew i {
+  margin: 4px;
+  min-width: 30%;
+  align-self: flex-end;
+}
 
 
 
