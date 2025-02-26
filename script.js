@@ -546,7 +546,9 @@ window.onload = async (event) => {
   // await init_window("Window 3", "<embed src='https://backback12.github.io', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
   // await init_window("Window 4", "<embed src='http://localhost:5500', style='width:100%; height:100%;'>", "/assets/icon_test.png", 180, 180);
   await init_window("Connor's Blog", "/pages/blog.html", "/assets/icon_test.png", 230, 230, 500, 400);
-  await init_window("Milestones", "/pages/milestones.html", "/assets/icon_test.png", 330, 330, 500, 400);
+  await init_window("Achievements", "/pages/achievements.html", "/assets/icon_test.png", 380, 380, 500, 400);
+  await init_window("Title", "/pages/title.html", "/assets/icon_test.png", 100, 50, 800, 200);
+  await init_window("Drone", "/pages/drone.html", "/assets/icon_test.png", 100, 350, 800, 400);
   // await init_window("threejs", "/pages/3d.html", "/assets/icon_test.png", 430, 430, 500, 400);
 
   // await init_window("Chimp Want Banana - itch.io", `<iframe frameborder="0" src="https://itch.io/embed-upload/3392649?color=2b5754" allowfullscreen="" width="1044" height="808"><a href="https://alphaq.itch.io/chimp-want-banana">Play Chimp Want Banana on itch.io</a></iframe>`, 200, 200, 1044, 808);

@@ -67,6 +67,7 @@ body {
   background-color: #007F7F;
   background-image: url('/assets/images/wallpaper_0.jpg');
   background-size: contain;
+  /* background: url('/assets/images/wallpaper_0.jpg') #FF0000FF; */
   /* background-size: cover; */
   /* background-position: center; */
 
