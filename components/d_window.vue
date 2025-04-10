@@ -20,14 +20,18 @@
           <!-- <div class="button" onclick="btn_question(this.closest('.window'));">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#000000" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
           </div> -->
-          <div class="button" onclick="btn_minimize(this.closest('.window'));">
-            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 9h7M2 10h7" /></svg>
+          <div class="button minimize" @click="btn_minimize">
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 9h7M2 10h7" /></svg> -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 9h7M2 10h7" /></svg>
           </div>
-          <div class="button" onclick="btn_maximize(this.closest('.window'));">
-            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
+          <div class="button maximize" @click="btn_maximize">
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg> -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
           </div>
-          <div class="button" onclick="btn_close(this.closest('.window'));">
-            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
+          <!-- <div class="button close" onclick="btn_close(this.closest('.window'));"> -->
+          <div class="button close" @click="btn_close">
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg> -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
           </div>
         </div>
       </div>
@@ -48,6 +52,74 @@ import { useFocus } from '~/composables/useFocus';
 const { setFocus } = useFocus();
 
 const windowRef = ref(null);
+
+
+
+
+
+
+function btn_minimize(target) {
+  // need taskbar functionality first
+}
+function btn_maximize() {
+  // maximize target
+  // if maximized... return to before size
+  let target = windowRef.value;
+
+  if (!target) return;
+
+  
+  if (target.getAttribute('maximized') == 'true') {
+    // MINIMIZE
+    target.setAttribute('maximized', false);
+    target.classList.remove('maximized');
+
+    var x = target.getAttribute('maxi-x');
+    var y = target.getAttribute('maxi-y');
+    target.style.transform = `translate(${ x }px, ${ y }px)`
+    
+    target.setAttribute('data-x', x)
+    target.setAttribute('data-y', y)
+
+    target.style.width = target.getAttribute('maxi-w') + 'px';
+    target.style.height = target.getAttribute('maxi-h') + 'px';
+
+    target.querySelector('.button.maximize svg').innerHTML = '<path d="M0 0h12M0 1h12M0 2h12M0 3h1M11 3h1M0 4h1M11 4h1M0 5h1M11 5h1M0 6h1M11 6h1M0 7h1M11 7h1M0 8h1M11 8h1M0 9h1M11 9h1M0 10h1M11 10h1M0 11h12" />'
+  } 
+  else {
+    // MAXIMIZE
+    target.setAttribute('maximized', true);
+    target.classList.add('maximized');
+
+    target.setAttribute('maxi-x', target.getAttribute('data-x'));
+    target.setAttribute('maxi-y', target.getAttribute('data-y'));
+    target.setAttribute('maxi-w', target.offsetWidth);
+    target.setAttribute('maxi-h', target.offsetHeight);
+
+    target.style.transform = 'translate(0px, 0px)';
+    target.setAttribute('data-x', 0);
+    target.setAttribute('data-y', 0);
+    
+    target.style.width = target.parentElement.offsetWidth + 'px';
+    target.style.height = target.parentElement.offsetHeight + 'px';
+
+    target.querySelector('.button.maximize svg').innerHTML = '<path d="M3 0h8M3 1h8M10 2h1M0 3h8M10 3h1M0 4h8M10 4h1M0 5h1M7 5h1M10 5h1M0 6h1M7 6h1M10 6h1M0 7h1M7 7h1M9 7h2M0 8h1M7 8h1M0 9h1M7 9h1M0 10h8" />'
+  }
+  
+}
+
+function btn_close() {
+  if (windowRef && windowRef.value) {
+    const window_id = windowRef.value.getAttribute('window-id')
+    // remove all targets with window-id
+    for (const elem of document.querySelectorAll(`[window-id="${ window_id }"]`)) {
+      elem.remove();
+    }
+  }
+}
+
+
+
 
 function dragMoveListener (event) {
   var target = event.target
