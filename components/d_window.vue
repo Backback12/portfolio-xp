@@ -12,10 +12,10 @@
 </div>
 </template> -->
 <template>
-  <div class="window" ref="windowRef">
-    <div class="window draggable">
+  <!-- <div class="window" > -->
+    <div class="window draggable" ref="windowRef">
       <div class="title-bar">
-        <span class="title">{{ title }}</span>
+        <span class="title">{{ title="Blank Title" }}</span>
         <div class="buttons">
           <!-- <div class="button" onclick="btn_question(this.closest('.window'));">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#000000" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
@@ -37,12 +37,15 @@
         <slot></slot>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script setup>
 import interact from 'interactjs'
   // interact('.window')
+
+import { useFocus } from '~/composables/useFocus';
+const { setFocus } = useFocus();
 
 const windowRef = ref(null);
 
@@ -60,53 +63,56 @@ function dragMoveListener (event) {
   target.setAttribute('data-y', y)
 
   // setActiveWindow(target)
-  setFocus(target);
+  // setFocus(target);
 }
 
 
 
-function setFocus(target) {
-  var n = 0;
+// function setFocus(target) {
+//   var n = 0;
 
   
-  if (target.classList.contains('window')) {
-    // if window selected
-    document.querySelectorAll('.window').forEach(function(window) {
-      window.classList.remove('active');
-      if (window.style.zIndex > target.style.zIndex) {
-        window.style.zIndex = Number(window.style.zIndex) - 1;
-        n += 1;
-      }
-    });
-    target.classList.add('active');
-    target.style.zIndex = Number(target.style.zIndex) + n;
+//   if (target.classList.contains('window')) {
+//     // if window selected
+//     document.querySelectorAll('.window').forEach(function(window) {
+//       window.classList.remove('active');
+//       if (window.style.zIndex > target.style.zIndex) {
+//         window.style.zIndex = Number(window.style.zIndex) - 1;
+//         n += 1;
+//       }
+//     });
+//     target.classList.add('active');
+//     console.log("ACTIVATED! from z=" + Number(target.style.zIndex) + " to " + (Number(target.style.zIndex) + n));
+//     target.style.zIndex = Number(target.style.zIndex) + n;
+    
 
 
-    // set taskbar tab to active
-    document.querySelectorAll('.task-tab').forEach(function(tasktab) {
-      tasktab.classList.remove('active');
-    });
-    const window_id = target.getAttribute('window-id');
-    document.querySelectorAll(`[window-id="${ window_id }"]`).forEach(function(tasktab) {
-      tasktab.classList.add('active');
-    });
-  }
-  else {
-    document.querySelectorAll('.window').forEach(function(window) {
-      window.classList.remove('active');
-    });
-  }
-}
+//     // set taskbar tab to active
+//     document.querySelectorAll('.task-tab').forEach(function(tasktab) {
+//       tasktab.classList.remove('active');
+//     });
+//     const window_id = target.getAttribute('window-id');
+//     document.querySelectorAll(`[window-id="${ window_id }"]`).forEach(function(tasktab) {
+//       tasktab.classList.add('active');
+//     });
+//   }
+//   else {
+//     document.querySelectorAll('.window').forEach(function(window) {
+//       window.classList.remove('active');
+//     });
+//   }
+// }
 
 
 onMounted(() => {
   // windowRef.value.style.zIndex = document.querySelector("#windows").children.length;
   var maxZ = 0;
-  const foundWindows = document.querySelectorAll('.window');
-  foundWindows.forEach(window => {
+  document.querySelectorAll('.window').forEach(window => {
     maxZ = Math.max(maxZ, window.style.zIndex);
   });
   windowRef.value.style.zIndex = maxZ + 1;
+  // console.log("initialized with z = " + (maxZ+1));
+  windowRef.value.setAttribute('window-id', maxZ + 1);
 
   interact(windowRef.value)
     .draggable({

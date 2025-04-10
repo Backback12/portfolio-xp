@@ -32,7 +32,7 @@
 <script setup>
   import desktop from "~/components/desktop.vue"
   import desktopicon from "~/components/desktopicon.vue"
-  import window from "~/components/window.vue"
+  // import window from "~/components/window.vue"
 
   import icon_trash from "~/assets/images/recycling.png"
 </script>

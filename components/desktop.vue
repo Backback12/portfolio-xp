@@ -7,13 +7,40 @@
       <div id="windows">
         <!-- Windows Container -->
 
-        <window>HEYYY
+        <d_window>HEYYY
           <h1>HEY BOIII</h1>
-        </window>
-        <window>
+        </d_window>
+        <d_window>
           <h1>WINDOW NUMBER TWO</h1>
-        </window>
-
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        <d_window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </d_window>
+        
       </div>
     </div>
     <div id="taskbar">
@@ -35,9 +62,27 @@
   </div>
   </template>
   
-  <script setup>
-  import window from "~/components/window.vue"
-  
+<script setup>
+  import d_window from "~/components/d_window.vue";
+  import { useFocus } from "~/composables/useFocus";
+  const { setFocus } = useFocus();
+
+
+
+onMounted(() => {
+
+  window.addEventListener('mousedown', (event) => {
+    // console.log("YAAA");
+    const clickedElem = event.target;
+
+    const foundElem = clickedElem.closest('.window, #desktop, .d-icon');
+
+    if (foundElem) {
+      setFocus(foundElem);
+    }
+  })
+
+});
 </script>
 
 <style scoped>
