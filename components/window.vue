@@ -12,8 +12,8 @@
 </div>
 </template> -->
 <template>
-  <div class="window">
-    <div class="window draggable" id="blog">
+  <div class="window" ref="windowRef">
+    <div class="window draggable">
       <div class="title-bar">
         <span class="title">{{ title }}</span>
         <div class="buttons">
@@ -41,8 +41,140 @@
 </template>
 
 <script setup>
+import interact from 'interactjs'
+  // interact('.window')
+
+const windowRef = ref(null);
+
+function dragMoveListener (event) {
+  var target = event.target
+  // keep the dragged position in the data-x/data-y attributes
+  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+  // translate the element
+  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+  // update the posiion attributes
+  target.setAttribute('data-x', x)
+  target.setAttribute('data-y', y)
+
+  // setActiveWindow(target)
+  setFocus(target);
+}
 
 
+
+function setFocus(target) {
+  var n = 0;
+
+  
+  if (target.classList.contains('window')) {
+    // if window selected
+    document.querySelectorAll('.window').forEach(function(window) {
+      window.classList.remove('active');
+      if (window.style.zIndex > target.style.zIndex) {
+        window.style.zIndex = Number(window.style.zIndex) - 1;
+        n += 1;
+      }
+    });
+    target.classList.add('active');
+    target.style.zIndex = Number(target.style.zIndex) + n;
+
+
+    // set taskbar tab to active
+    document.querySelectorAll('.task-tab').forEach(function(tasktab) {
+      tasktab.classList.remove('active');
+    });
+    const window_id = target.getAttribute('window-id');
+    document.querySelectorAll(`[window-id="${ window_id }"]`).forEach(function(tasktab) {
+      tasktab.classList.add('active');
+    });
+  }
+  else {
+    document.querySelectorAll('.window').forEach(function(window) {
+      window.classList.remove('active');
+    });
+  }
+}
+
+
+onMounted(() => {
+  // windowRef.value.style.zIndex = document.querySelector("#windows").children.length;
+  var maxZ = 0;
+  const foundWindows = document.querySelectorAll('.window');
+  foundWindows.forEach(window => {
+    maxZ = Math.max(maxZ, window.style.zIndex);
+  });
+  windowRef.value.style.zIndex = maxZ + 1;
+
+  interact(windowRef.value)
+    .draggable({
+      // intertia: true,
+      allowFrom: '.title-bar',
+      ignoreFrom: '.button',
+
+      modifiers: [
+        interact.modifiers.restrictRect({
+          restriction: 'parent',
+        }),
+        // interact.modifiers.restrict({
+        //   restriction: 'parent',
+        //   endOnly: true
+        // })
+      ],
+      autoScroll: false,
+      listeners: {
+        move: dragMoveListener,
+
+      },
+      cursorChecker () {
+        // don't set a cursor for drag actions
+        return null
+      },
+    })
+    .resizable({
+      // resize from all edges and corners
+      edges: { left: true, right: true, bottom: true, top: true },
+
+      listeners: {
+        move (event) {
+          var target = event.target
+          var x = (parseFloat(target.getAttribute('data-x')) || 0)
+          var y = (parseFloat(target.getAttribute('data-y')) || 0)
+
+          // update the element's style
+          target.style.width = event.rect.width + 'px'
+          target.style.height = event.rect.height + 'px'
+
+          // translate when resizing from top or left edges
+          x += event.deltaRect.left
+          y += event.deltaRect.top
+
+          target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+          target.setAttribute('data-x', x)
+          target.setAttribute('data-y', y)
+        }
+      },
+      modifiers: [
+        // keep the edges inside the parent
+        interact.modifiers.restrictEdges({
+          outer: 'parent'
+        }),
+
+        // minimum size
+        interact.modifiers.restrictSize({
+          min: { width: 300, height: 200 }
+          // min: { width: min_width, height: min_height }
+        })
+      ],
+      
+      margin: 4,
+      // padding: 20
+      // inertia: true
+    })
+  })
 </script>
 
 <style scoped>

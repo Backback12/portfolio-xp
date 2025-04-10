@@ -10,6 +10,9 @@
         <window>HEYYY
           <h1>HEY BOIII</h1>
         </window>
+        <window>
+          <h1>WINDOW NUMBER TWO</h1>
+        </window>
 
       </div>
     </div>
@@ -65,6 +68,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  /* z-index: -999; */
 }
 
 #upper-screen {
@@ -75,6 +79,7 @@
   height: 100%;
   /* height: 500px; */
   /* height: inherit; */
+  /* z-index: -999; */
 }
 /* ================================================================ */
 /* =========================== DESKTOP ============================ */
@@ -97,6 +102,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-content: flex-start;
+  /* z-index: -999; */
 }
 /* ================================================================ */
 /* =========================== WINDOWS ============================ */
