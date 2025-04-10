@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'Tahoma XP';
+  src: url('~/assets/windows-xp-tahoma.woff') format('woff'), 'Chrome 6+', 'Firefox 3.6+', 'IE 9+', 'Safari 5.1+'
+       url('~/assets/windows-xp-tahoma.ttf') format('truetype');
+}  
+
+/* body {
+  font-family: 'Tahoma';
+  font-size: 11px;
+  letter-spacing: 0.5px;
+
+  user-select: none;
+
+  background-color: #008080;
+  margin: 0px;
+  padding: 4px;
+
+  overflow: hidden;
+} */
+
+body {
+  margin: 0;
+
+  
+  font-family: 'Tahoma';
+  font-size: 12px;
+
+  /* font-family: TahomaXP;
+  font-size: 16px; */
+  
+  letter-spacing: 0.06rem;
+}
