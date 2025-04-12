@@ -41,6 +41,7 @@
           <h1>WINDOW NUMBER TWO</h1>
         </d_window>
         
+        <egg></egg>
       </div>
     </div>
     <div id="taskbar">

@@ -13,13 +13,22 @@
 </template> -->
 <template>
   <!-- <div class="window" > -->
-    <div class="window draggable" ref="windowRef">
+    <div 
+      class="window draggable" 
+      ref="windowRef"
+      :style="{
+        width: set_width ? set_width + 'px' : 'auto',
+        height: set_height ? set_height + 'px' : 'auto',
+      }">
       <div class="title-bar">
-        <span class="title">{{ title="Blank Title" }}</span>
+        <span class="title">{{ title }}</span>
         <div class="buttons">
           <!-- <div class="button" onclick="btn_question(this.closest('.window'));">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#000000" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
           </div> -->
+          <div class="button question" @onclick="">
+            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
+          </div>
           <div class="button minimize" @click="btn_minimize">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 9h7M2 10h7" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 9h7M2 10h7" /></svg>
@@ -37,7 +46,7 @@
       </div>
       <!-- <div class="content" inject="/pages/blog.html"> -->
       <div class="content">
-        HERE IS MY CONTENT
+        <!-- HERE IS MY CONTENT -->
         <slot></slot>
       </div>
     </div>
@@ -45,10 +54,19 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  title: { type: String, required: false, default: "No Title" },
+  resizable: { type: Boolean, required: false, default: true },
+  set_width: { type: Number, required: false},
+  set_height: { type: Number, required: false},
+});
+
+
+
 import interact from 'interactjs'
   // interact('.window')
 
-import { useFocus } from '~/composables/useFocus';
+// import { useFocus } from '~/composables/useFocus';
 const { setFocus } = useFocus();
 
 const windowRef = ref(null);
@@ -208,11 +226,15 @@ onMounted(() => {
       },
       cursorChecker () {
         // don't set a cursor for drag actions
-        return null
+        // return null
       },
-    })
+    });
+    if (props.resizable) {
+    interact(windowRef.value)
     .resizable({
       // resize from all edges and corners
+      
+
       edges: { left: true, right: true, bottom: true, top: true },
 
       listeners: {
@@ -243,8 +265,12 @@ onMounted(() => {
 
         // minimum size
         interact.modifiers.restrictSize({
-          min: { width: 300, height: 200 }
+          // min: { width: 300, height: 200 }
           // min: { width: min_width, height: min_height }
+          min: { 
+            width: props.set_width ? props.set_width : 300,
+            height: props.set_height ? props.set_height : 200
+          }
         })
       ],
       
@@ -252,7 +278,23 @@ onMounted(() => {
       // padding: 20
       // inertia: true
     })
+    }
+
+    
+    
+    
+    
+    // if (props.set_width) {
+    //   windowRef.value.style.width = String(props.set_width);
+    //   console.log(props.set_width);
+    // }
+    // if (props.set_height) {
+    //   windowRef.value.style.height = props.set_height;
+    // }
+    
   })
+
+
 </script>
 
 <style scoped>
@@ -263,7 +305,7 @@ onMounted(() => {
   
   position: absolute;
   background-color: #0831D9;
-  width: 300px;
+  width: 100px;
   height: 200px;
   /* border: 1px solid #FFFFFF; */
 
@@ -386,6 +428,9 @@ onMounted(() => {
 }
 .window .title-bar .buttons .button.close:hover {
   background: linear-gradient(135deg, #CAC2C7 0%, #C26C5C 30%);   
+}
+.window .title-bar .buttons .button.question {
+  margin-right: 5px;
 }
 
 

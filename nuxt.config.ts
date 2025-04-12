@@ -9,11 +9,11 @@ export default defineNuxtConfig({
   app: {
     head: {
       script: [
-        // {
+        // { 
         //   // src: '/scripts/plain-draggable.min.js'
         //   src: '/scripts/interact.min.js'
         // },
-        // {
+        // { 
         //   src: '/scripts/plain-draggable.js'
         // }
       ],
