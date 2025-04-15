@@ -3,6 +3,12 @@
     <div id="upper-screen">
       <div id="desktop">
         <!-- Desktop Icons Container -->
+        <desktopicon img="/assets/system/drone.png" name="Drone Photos"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
       </div>
       <div id="windows">
         <!-- Windows Container -->
@@ -10,7 +16,7 @@
         <d_window>HEYYY
           <h1>HEY BOIII</h1>
         </d_window>
-        <d_window>
+        <!-- <d_window>
           <h1>WINDOW NUMBER TWO</h1>
         </d_window>
         <d_window>
@@ -39,7 +45,7 @@
         </d_window>
         <d_window>
           <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
+        </d_window> -->
         
         <egg></egg>
       </div>
@@ -57,7 +63,7 @@
         <img src="/public/assets/system/imepadsv.exe_14_200_0-0.png">
         
         <!-- Time Updated with Javascript  -->
-        <a id="time">12:05 AM</a>
+        <a id="time" ref="timeclock">--:-- --</a>
       </div>
     </div>
   </div>
@@ -68,7 +74,20 @@
   import { useFocus } from "~/composables/useFocus";
   const { setFocus } = useFocus();
 
+const timeclock = ref(null);
 
+function updateTime() {
+  if (timeclock.value) {
+    var myTime = new Date();
+    
+    var hours = myTime.getHours() % 12 ? myTime.getHours() % 12 : 12;
+    var mins = myTime.getMinutes() < 10 ? '0'+myTime.getMinutes() : myTime.getMinutes();
+    var ampm = myTime.getHours() >= 12 ? 'PM' : 'AM';
+
+    timeclock.value.innerHTML = hours + ':' + mins + ' ' + ampm;
+  };
+  setTimeout(updateTime, 1000);
+}
 
 onMounted(() => {
 
@@ -83,6 +102,11 @@ onMounted(() => {
     }
   })
 
+
+  // timeclock.value.innerHTML = Date.now().toLocaleString()
+  // "YYYY-MM-DDTHH:mm:ss.sssZ"
+
+  updateTime();  
 });
 </script>
 
@@ -142,13 +166,18 @@ onMounted(() => {
   /* height: 100vh; */
   /* height: 100%; */
   height: inherit;
-  width: 100vw;
+  width: 100%;
   /* padding: 16px; */
+  padding: 32px;
+  box-sizing: border-box;
+  
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-content: flex-start;
+  /* align-content: flex-start; */
   /* z-index: -999; */
+
+  user-select: none;
 }
 /* ================================================================ */
 /* =========================== WINDOWS ============================ */
@@ -163,6 +192,10 @@ onMounted(() => {
 
 
   pointer-events: none;
+
+  overflow: hidden;
+
+  user-select: none;
 }
 /* ================================================================ */
 /* =========================== TASKBAR ============================ */

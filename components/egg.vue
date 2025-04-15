@@ -1,8 +1,8 @@
 <template>
-  <d_window title="AHAHh" :resizable=false :set_width="384" :set_height="256">
-    <div draggable="false" ref="contentRef" class="content">
-      <!-- BRUH -->
-      <!-- <h1>EGG</h1> -->
+  
+  <d_window title="EGG GAME" :resizable=false :set_width="384" :set_height="256" :tool_menu="{'Game': '', 'About': ''}">
+    
+    <div draggable="false" ref="contentRef" class="content" :draggable="false">
       <span class="title">FEED EGGS</span>
       <div ref="eggmanRef" class="head-container">
         <img draggable=false class="head open" ref="eggmouthRef" src="/public/assets/egg/egg_egg_0.png">
@@ -50,8 +50,10 @@ onMounted(() => {
       // console.log(offx + " AND " + offy);
 
 
-      eggRef.value.style.top = offy + 'px';
-      eggRef.value.style.left = offx + 'px';
+      // eggRef.value.style.top = offy + 'px';
+      // eggRef.value.style.left = offx + 'px';
+      eggRef.value.style.top = (offy + 30) + 'px';
+      eggRef.value.style.left = (offx - 5) + 'px';
     })
     
 
@@ -71,14 +73,15 @@ onMounted(() => {
         var rect = eggmouthRef.value.getBoundingClientRect();
         let midX = rect.left + rect.width / 2;
         let midY = rect.top + rect.height / 2;
-        const dist = 25;
+        const deltax = 25;
+        const deltay = 30;
 
         // console.log("Comparing " + midX + " and " + midY);
         // console.log("To : " + event.pageX + " and " + event.pageY);
 
 
-        if (midX - dist < event.pageX && event.pageX < midX + dist &&
-            midY - dist < event.pageY && event.pageY < midY + dist) {
+        if (midX - deltax < event.pageX && event.pageX < midX + deltax &&
+            midY - deltay < event.pageY && event.pageY < midY + deltay) {
           
           // INSIDE
           // console.log("INSIDE");
@@ -119,7 +122,7 @@ onMounted(() => {
         // console.log(offx + " AND " + offy);
 
 
-        eggRef.value.style.top = (offy + 3) + 'px';
+        eggRef.value.style.top = (offy + 30) + 'px';
         eggRef.value.style.left = (offx - 5) + 'px';
       }
     })
@@ -141,6 +144,7 @@ onMounted(() => {
 
 
   /* position: absolute; */
+  user-select: none;
 }
 .content > img {
   position: absolute;

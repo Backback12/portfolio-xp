@@ -9,7 +9,7 @@
 const props = defineProps({
   img: { type: String, required: true },
   name: { type: String, required: true },
-  fnc: { type: String, required: true},
+  fnc: { type: String, required: false},
 })
 </script>
 
@@ -18,6 +18,7 @@ const props = defineProps({
 .desktop-icon {
   width: 64px;
   height: 64px;
+  margin: 12px;
 }
 .desktop-icon img {
   position: absolute;
@@ -29,6 +30,8 @@ const props = defineProps({
   padding-top: 34px;
   text-align: center;
   align-items: center;
+  font-weight: 100;
+  letter-spacing: 0;
 }
 .desktop-icon span {
   color: white;

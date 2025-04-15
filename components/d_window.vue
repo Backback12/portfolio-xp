@@ -33,18 +33,28 @@
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 9h7M2 10h7" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 9h7M2 10h7" /></svg>
           </div>
-          <div class="button maximize" @click="btn_maximize">
+          <div class="button maximize disabled" @click="btn_maximize">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
           </div>
           <!-- <div class="button close" onclick="btn_close(this.closest('.window'));"> -->
           <div class="button close" @click="btn_close">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg> -->
-            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg> -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" shape-rendering="crispEdges"><path d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
           </div>
         </div>
       </div>
       <!-- <div class="content" inject="/pages/blog.html"> -->
+      <div class="toolbar">
+        <!-- <div class="button">File</div> -->
+        <!-- <div class="button">Edit</div> -->
+        <!-- <div class="button">View</div> -->
+        <!-- <div class="button">Favourites</div> -->
+        <!-- <div class="button">Tools</div> -->
+        <!-- <div class="button">Help</div> -->
+         <div v-for="(list, name) in tool_menu" :key="name" class="button">{{ name }}</div>
+      </div>
       <div class="content">
         <!-- HERE IS MY CONTENT -->
         <slot></slot>
@@ -59,6 +69,7 @@ const props = defineProps({
   resizable: { type: Boolean, required: false, default: true },
   set_width: { type: Number, required: false},
   set_height: { type: Number, required: false},
+  tool_menu: { type: Object, required: false, default: {"File": "", "Edit": "", "View": "", "Favourites": "", "Tools": "", "Help": ""}}
 });
 
 
@@ -213,6 +224,7 @@ onMounted(() => {
       modifiers: [
         interact.modifiers.restrictRect({
           restriction: 'parent',
+          endOnly: true,
         }),
         // interact.modifiers.restrict({
         //   restriction: 'parent',
@@ -230,54 +242,54 @@ onMounted(() => {
       },
     });
     if (props.resizable) {
-    interact(windowRef.value)
-    .resizable({
-      // resize from all edges and corners
-      
+      interact(windowRef.value)
+      .resizable({
+        // resize from all edges and corners
+        
 
-      edges: { left: true, right: true, bottom: true, top: true },
+        edges: { left: true, right: true, bottom: true, top: true },
 
-      listeners: {
-        move (event) {
-          var target = event.target
-          var x = (parseFloat(target.getAttribute('data-x')) || 0)
-          var y = (parseFloat(target.getAttribute('data-y')) || 0)
+        listeners: {
+          move (event) {
+            var target = event.target
+            var x = (parseFloat(target.getAttribute('data-x')) || 0)
+            var y = (parseFloat(target.getAttribute('data-y')) || 0)
 
-          // update the element's style
-          target.style.width = event.rect.width + 'px'
-          target.style.height = event.rect.height + 'px'
+            // update the element's style
+            target.style.width = event.rect.width + 'px'
+            target.style.height = event.rect.height + 'px'
 
-          // translate when resizing from top or left edges
-          x += event.deltaRect.left
-          y += event.deltaRect.top
+            // translate when resizing from top or left edges
+            x += event.deltaRect.left
+            y += event.deltaRect.top
 
-          target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+            target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
 
-          target.setAttribute('data-x', x)
-          target.setAttribute('data-y', y)
-        }
-      },
-      modifiers: [
-        // keep the edges inside the parent
-        interact.modifiers.restrictEdges({
-          outer: 'parent'
-        }),
-
-        // minimum size
-        interact.modifiers.restrictSize({
-          // min: { width: 300, height: 200 }
-          // min: { width: min_width, height: min_height }
-          min: { 
-            width: props.set_width ? props.set_width : 300,
-            height: props.set_height ? props.set_height : 200
+            target.setAttribute('data-x', x)
+            target.setAttribute('data-y', y)
           }
-        })
-      ],
-      
-      margin: 4,
-      // padding: 20
-      // inertia: true
-    })
+        },
+        modifiers: [
+          // keep the edges inside the parent
+          interact.modifiers.restrictEdges({
+            outer: 'parent'
+          }),
+
+          // minimum size
+          interact.modifiers.restrictSize({
+            // min: { width: 300, height: 200 }
+            // min: { width: min_width, height: min_height }
+            min: { 
+              width: props.set_width ? props.set_width : 300,
+              height: props.set_height ? props.set_height : 200
+            }
+          })
+        ],
+        
+        margin: 4,
+        // padding: 20
+        // inertia: true
+      })
     }
 
     
@@ -432,11 +444,16 @@ onMounted(() => {
 .window .title-bar .buttons .button.question {
   margin-right: 5px;
 }
+.window .title-bar .buttons .button.disabled {
+  /* background: linear-gradient(135deg, #89A2E8 0%, #4074EB 30%); */
+  /* background: linear-gradient(#8FABE7 0%, #7998DF 15%, #80A4E7 90%, #7A95E0 100%); */
+  background: linear-gradient(135deg, #7998DF 0%, #80A4E7 30%);
+}
 
 
 .window .toolbar {
-  height: 24px;
-  min-height: 24px; 
+  height: 18px;
+  min-height: 18px; 
   background: #EDE9D4;
   /* border: 1px outset #EDE9D4; */
   /* border-bottom: 1px outset #EDE9D4; */
@@ -450,7 +467,10 @@ onMounted(() => {
   align-items: center;
   align-content: center;
   padding: 0 6px;
-  margin: 2px;
+  margin: 1px;
+
+  font-size: 10px;
+  letter-spacing: 0;
 }
 .window .toolbar .button:hover {
   background: #1660E8;
@@ -513,6 +533,11 @@ onMounted(() => {
   background: linear-gradient(135deg, #F9B99A 0%, #D04501 30%);
   /* background: #000; */
 }
+.window:active .title-bar .buttons .button.disabled {
+  /* background: linear-gradient(135deg, #89A2E8 0%, #4074EB 30%); */
+  /* background: linear-gradient(#8FABE7 0%, #7998DF 15%, #80A4E7 90%, #7A95E0 100%); */
+  /* background: linear-gradient(135deg, #7998DF 0%, #80A4E7 30%); */
+}
 
 .window.active .toolbar {
   border-left: 4px solid #0831D9;
@@ -538,6 +563,7 @@ onMounted(() => {
   background: linear-gradient(135deg, #E0A68A 0%, #C23F00 30%);   
   border: 1px solid #d2d2d2;
 }
+
 
 
 /* MAXIMIZED - FULL SCREEN */
