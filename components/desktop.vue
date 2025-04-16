@@ -13,8 +13,17 @@
       <div id="windows">
         <!-- Windows Container -->
 
-        <d_window>HEYYY
-          <h1>HEY BOIII</h1>
+        <egg></egg>
+        <d_window set_width="800" set_height="150" title="Home Title" tool_menu="">
+          <div style="display: flex; align-items: center; justify-content: center;
+                  background: #202020; height: 100%; flex-direction: column;">
+            <h1 style="text-align: center; font-size: 2rem; margin: 0; color: #d0d0d0; text-shadow: 5px 5px 2px #800000, -5px 5px 2px #000060;">
+              Connor Pagtakhan
+            </h1>
+            <h1 style="text-align: center; font-size: 1.6rem; margin: 0; color: #d0d0d0; text-shadow: 5px 5px 2px #800000, -5px 5px 2px #000060;">
+              Website Portfolio
+            </h1>
+          </div>
         </d_window>
         <!-- <d_window>
           <h1>WINDOW NUMBER TWO</h1>
@@ -47,7 +56,8 @@
           <h1>WINDOW NUMBER TWO</h1>
         </d_window> -->
         
-        <egg></egg>
+        
+        <!-- <itchiogame></itchiogame> -->
       </div>
     </div>
     <div id="taskbar">

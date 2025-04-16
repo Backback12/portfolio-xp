@@ -4,14 +4,17 @@
     
     <div draggable="false" ref="contentRef" class="content" :draggable="false">
       <span class="title">FEED EGGS</span>
+      <!-- head -->
       <div ref="eggmanRef" class="head-container">
         <img draggable=false class="head open" ref="eggmouthRef" src="/public/assets/egg/egg_egg_0.png">
         <img draggable=false class="head eat hidden" src="/public/assets/egg/egg_egg_1.png">
         <img draggable=false class="mouth eat hidden yummy" src="/public/assets/egg/egg_mouth.png">
       </div>
+      <!-- static -->
       <img draggable=false class="legs" src="/public/assets/egg/egg_legs.png">
       <img draggable=false ref="basketRef" class="basket" src="/public/assets/egg/egg_basket.png">
 
+      <!-- egg -->
       <img draggable=false ref="eggRef" class="egg hidden" src="/public/assets/egg/egg_egg.png">
     </div>
     

@@ -35,6 +35,18 @@
   // import window from "~/components/window.vue"
 
   import icon_trash from "~/assets/images/recycling.png"
+
+
+  useHead({
+  title: "Connor's Website",
+  meta: [
+    { name: 'description', content: "Connor's website site page" },
+    { property: 'og:title', content: "Connor's Website" },
+    { property: 'og:description', content: "Connor's website site page" },
+    // { property: 'og:image', content: '' },
+    // { property: 'og:url', content: '' },
+  ]
+})
 </script>
 
 <style scoped>

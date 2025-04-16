@@ -23,17 +23,18 @@
       <div class="title-bar">
         <span class="title">{{ title }}</span>
         <div class="buttons">
-          <!-- <div class="button" onclick="btn_question(this.closest('.window'));">
-            <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path stroke="#000000" d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
-          </div> -->
-          <div class="button question" @onclick="">
+          <!-- <div class="button question" @onclick="">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
-          </div>
+          </div> -->
           <div class="button minimize" @click="btn_minimize">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 9h7M2 10h7" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 9h7M2 10h7" /></svg>
           </div>
-          <div class="button maximize disabled" @click="btn_maximize">
+          
+          <div class="button maximize"
+               :class="{ disabled: !resizable}" 
+               :disabled="!resizable"
+               @click="btn_maximize">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
           </div>
@@ -46,7 +47,7 @@
         </div>
       </div>
       <!-- <div class="content" inject="/pages/blog.html"> -->
-      <div class="toolbar">
+      <div v-if="tool_menu" class="toolbar">
         <!-- <div class="button">File</div> -->
         <!-- <div class="button">Edit</div> -->
         <!-- <div class="button">View</div> -->
@@ -444,10 +445,11 @@ onMounted(() => {
 .window .title-bar .buttons .button.question {
   margin-right: 5px;
 }
-.window .title-bar .buttons .button.disabled {
+.window .title-bar .buttons .button[disabled] {
   /* background: linear-gradient(135deg, #89A2E8 0%, #4074EB 30%); */
   /* background: linear-gradient(#8FABE7 0%, #7998DF 15%, #80A4E7 90%, #7A95E0 100%); */
   background: linear-gradient(135deg, #7998DF 0%, #80A4E7 30%);
+  pointer-events: none;
 }
 
 
