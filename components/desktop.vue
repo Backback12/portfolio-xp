@@ -18,10 +18,10 @@
           <div style="display: flex; align-items: center; justify-content: center;
                   background: #202020; height: 100%; flex-direction: column;">
             <h1 style="text-align: center; font-size: 2rem; margin: 0; color: #d0d0d0; text-shadow: 5px 5px 2px #800000, -5px 5px 2px #000060;">
-              Connor Pagtakhan
+              Connor Pagtakhan's
             </h1>
             <h1 style="text-align: center; font-size: 1.6rem; margin: 0; color: #d0d0d0; text-shadow: 5px 5px 2px #800000, -5px 5px 2px #000060;">
-              Website Portfolio
+              Web Portfolio
             </h1>
           </div>
         </d_window>
