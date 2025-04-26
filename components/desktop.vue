@@ -68,9 +68,9 @@
         <!-- <div class="task-tab active"><img src="/assets/icons/pifmgr.dll_14_20.png"><a>Window 2</a></div> -->
       </div>
       <div id="task-notifs">
+        <!-- <img src="/public/assets/system/imepadsv.exe_14_200_0-0.png">
         <img src="/public/assets/system/imepadsv.exe_14_200_0-0.png">
-        <img src="/public/assets/system/imepadsv.exe_14_200_0-0.png">
-        <img src="/public/assets/system/imepadsv.exe_14_200_0-0.png">
+        <img src="/public/assets/system/imepadsv.exe_14_200_0-0.png"> -->
         
         <!-- Time Updated with Javascript  -->
         <a id="time" ref="timeclock">--:-- --</a>
