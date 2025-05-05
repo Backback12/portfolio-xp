@@ -21,7 +21,8 @@
         height: set_height ? set_height + 'px' : 'auto',
       }">
       <div class="title-bar">
-        <span class="title">{{ title }}</span>
+        
+        <span class="titles"><img :src="icon" class="w-icon">  {{ title }}</span>
         <div class="buttons">
           <!-- <div class="button question" @onclick="">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
@@ -67,6 +68,7 @@
 <script setup>
 const props = defineProps({
   title: { type: String, required: false, default: "No Title" },
+  icon: { type: String, required: false, default: "/assets/system/imepadsv.exe_14_200_0-0.png"},
   resizable: { type: Boolean, required: false, default: true },
   set_width: { type: Number, required: false},
   set_height: { type: Number, required: false},
