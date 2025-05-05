@@ -25,6 +25,9 @@
             </h1>
           </div>
         </d_window>
+
+
+        <page_drone></page_drone>
         <!-- <d_window>
           <h1>WINDOW NUMBER TWO</h1>
         </d_window>
