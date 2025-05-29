@@ -16,6 +16,10 @@
     <desktopicon name="HomePage" :img="icon_trash" fnc=""/>
     <desktopicon name="HomePage" :img="icon_trash" fnc=""/>
   </div> --> 
+
+
+  <!-- <bootup></bootup> -->
+
   <desktop></desktop>
 
   

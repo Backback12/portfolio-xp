@@ -16,13 +16,14 @@
     <div 
       class="window draggable" 
       ref="windowRef"
+      :id="id"
       :style="{
         width: set_width ? set_width + 'px' : 'auto',
         height: set_height ? set_height + 'px' : 'auto',
       }">
       <div class="title-bar">
         
-        <span class="titles"><img :src="icon" class="w-icon">  {{ title }}</span>
+        <span class="titles"><img :src="icon" class="w-icon" style="margin-right: 3px;">  {{ title }}</span>
         <div class="buttons">
           <!-- <div class="button question" @onclick="">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10"><path d="M4 2h4M3 3h2M7 3h2M3 4h2M7 4h2M6 5h2M5 6h2M5 7h2M5 9h2M5 10h2" /></svg>
@@ -41,8 +42,8 @@
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
           </div>
-          <!-- <div class="button close" onclick="btn_close(this.closest('.window'));"> -->
-          <div class="button close" @click="btn_close">
+          
+          <div class="button close" @click="onClose(props.id)">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg> -->
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" shape-rendering="crispEdges"><path d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
@@ -69,16 +70,23 @@
 
 <script setup>
 const props = defineProps({
+  id: { type: String, required: true },
+
   title: { type: String, required: false, default: "No Title" },
   icon: { type: String, required: false, default: "/assets/system/imepadsv.exe_14_200_0-0.png"},
   resizable: { type: Boolean, required: false, default: true },
   set_width: { type: Number, required: false},
   set_height: { type: Number, required: false},
-  tool_menu: { type: Object, required: false, default: {"File": "", "Edit": "", "View": "", "Favourites": "", "Tools": "", "Help": ""}}
+  tool_menu: { type: Object, required: false, default: {"File": "", "Edit": "", "View": "", "Favourites": "", "Tools": "", "Help": ""}},
   // set_width: { type: String, required: false},
   // set_height: { type: String, required: false},
   // tool_menu: { type: String, required: false, default: '{"File": "", "Edit": "", "View": "", "Favourites": "", "Tools": "", "Help": ""}'}
+  
+  onClose: { type: Function, required: true, default: () => {} },
+  initialZ: { type: Number, required: true, default: -1 }
+  // onClose: () => void;
 });
+defineOptions({ inheritAttrs: true });
 
 
 
@@ -149,18 +157,6 @@ function btn_maximize() {
   
 }
 
-function btn_close() {
-  if (windowRef && windowRef.value) {
-    const window_id = windowRef.value.getAttribute('window-id')
-    // remove all targets with window-id
-    for (const elem of document.querySelectorAll(`[window-id="${ window_id }"]`)) {
-      elem.remove();
-    }
-  }
-}
-
-
-
 
 function dragMoveListener (event) {
   var target = event.target
@@ -221,13 +217,16 @@ onMounted(() => {
   // console.log('d_window.vue MOUNTED');
 
   // windowRef.value.style.zIndex = document.querySelector("#windows").children.length;
-  var maxZ = 0;
-  document.querySelectorAll('.window').forEach(window => {
-    maxZ = Math.max(maxZ, window.style.zIndex);
-  });
-  windowRef.value.style.zIndex = maxZ + 1;
-  // console.log("initialized with z = " + (maxZ+1));
-  windowRef.value.setAttribute('window-id', maxZ + 1);
+  // var maxZ = 0;
+  // document.querySelectorAll('.window').forEach(window => {
+  //   maxZ = Math.max(maxZ, window.style.zIndex);
+  // });
+  // windowRef.value.style.zIndex = maxZ + 1;
+  // // console.log("initialized with z = " + (maxZ+1));
+  // windowRef.value.setAttribute('window-id', maxZ + 1);
+
+  windowRef.value.style.zIndex = props.initialZ;
+  console.log("Set new window z to " + props.initialZ);
 
   interact(windowRef.value)
     .draggable({

@@ -3,8 +3,8 @@
     <div id="upper-screen">
       <div id="desktop">
         <!-- Desktop Icons Container -->
-        <desktopicon img="/assets/system/drone.png" name="Egg Game" :double-click="() => addWindow('page_egg')"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone Photos" :double-click="() => addWindow('page_drone')"></desktopicon>
+        <desktopicon img="/assets/egg/egg_egg.png" name="Egg Game" :double-click="() => addWindow('page_egg')"></desktopicon>
         <!-- <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
@@ -32,7 +32,7 @@
         <!-- <page_drone></page_drone> -->
         <!-- <page_drone></page_drone> -->
         <!-- <itchiogame></itchiogame> -->
-        <egg></egg>
+        <!-- <egg></egg> -->
         
 
         <!-- Dynamic components -->
@@ -45,8 +45,9 @@
         <component
           v-for="(page, index) in dynamicPages"
           :key="page.id"
-          :is="componentMap[page.name]"
-          v-bind="page.props"
+          :id="page.id"
+          :is="pageComponentMap[page.name]"
+          v-bind="{ ...page.props, id: page.id }"
         />
 
         <!-- <component :is="componentMap['page_drone']" /> -->
@@ -58,8 +59,22 @@
       <div id="start-btn"><img src="/public/assets/system/imepadsv.exe_14_200_0-0.png"><a>start</a></div>
       <div id="task-tabs">
         <!-- Windows Taskbar Tabs -->
-        <!-- <div class="task-tab"><img src="/assets/icon_test.png"><a>Notebook</a></div> -->
-        <!-- <div class="task-tab active"><img src="/assets/icons/pifmgr.dll_14_20.png"><a>Window 2</a></div> -->
+
+        <!-- <div class="task-tab"><img src="/assets/egg/egg_egg.png"><a>Egg Game</a></div> -->
+        <!-- <div class="task-tab active"><img src="/assets/system/drone.png"><a>Drone Photos</a></div> -->
+
+         <!-- <div class="task-tab">test</div> -->
+
+
+        <div 
+          class="task-tab" 
+          v-for="(item, index) in dynamicTabs"
+          :key="item.id"
+          :id="item.id"
+        >
+          <img src="/assets/egg/egg_egg.png"><a>{{ item.name }}</a>
+        </div>
+
       </div>
       <div id="task-notifs">
         <!-- <img src="/public/assets/system/imepadsv.exe_14_200_0-0.png">
@@ -74,16 +89,19 @@
   </template>
   
 <script setup>
-  import d_window from "~/components/d_window.vue";
-  import { useFocus } from "~/composables/useFocus";
+// import d_window from "~/components/d_window.vue";
+import { useFocus } from "~/composables/useFocus";
 
-  import pageEgg from "~/components/egg.vue"
-  import pageDrone from '~/components/page_drone.vue'
-  // import PageAbout from '~/components/page_about.vue'
+import pageEgg from "~/components/page_egg.vue"
+import pageDrone from '~/components/page_drone.vue'
 
+const pageComponentMap = {
+  page_egg: pageEgg,
+  page_drone: pageDrone
+}
   
 
-  const { setFocus } = useFocus();
+// const { setFocus } = useFocus();
 
 const timeclock = ref(null);
 const windows = ref(null);
@@ -95,8 +113,10 @@ function updateTime() {
     var hours = myTime.getHours() % 12 ? myTime.getHours() % 12 : 12;
     var mins = myTime.getMinutes() < 10 ? '0'+myTime.getMinutes() : myTime.getMinutes();
     var ampm = myTime.getHours() >= 12 ? 'PM' : 'AM';
+    // var secs  = myTime.getSeconds() < 10 ? '0'+myTime.getSeconds() : myTime.getSeconds();
 
     timeclock.value.innerHTML = hours + ':' + mins + ' ' + ampm;
+    // timeclock.value.innerHTML = hours + ":" + mins + ":" + secs + ' ' + ampm;
   };
   setTimeout(updateTime, 1000);
 }
@@ -121,13 +141,8 @@ function updateTime() {
 //   app.mount(container);
 // }
 
-let nextId = 0;
-const componentMap = {
-    page_egg: pageEgg,
-    page_drone: pageDrone
-    // page_about: PageAbout,
-}
 
+// define initial pages?
 const dynamicPages = ref([
   // { name: 'page_egg', props: {} },
   // { name: 'page_egg', props: {} },
@@ -135,15 +150,118 @@ const dynamicPages = ref([
   // { name: 'page_about', props: { title: 'About Me' } },
   // {name: 'page_drone', props: {} },
   // {name: 'page_drone', props: {} },
-])
+]);
 
+const dynamicTabs = ref([]);  // taskbar tabs
+
+let nextId = 0;
 function addWindow(name, props = {}) {
-  nextTick(() => {
-    dynamicPages.value.push({ id: nextId, name, props });
-    console.log("added " + name);
-  });
+  
+  // pass props for every window
+  // props.id = nextId++;
+  // or
+  props.id = crypto.randomUUID();
+  props.onClose = closeWindow;
+  props.initialZ = dynamicPages.value.length + 1;
+
+  dynamicPages.value.push({ id: props.id, name, props });
+  dynamicTabs.value.push({ id: props.id, name: name });
+
+  console.log(dynamicPages.value.length);
 }
 
+function closeWindow(id) {
+  // console.log("running closeWindow with " + id);
+  // Remove from DOM
+  for (const elem of document.querySelectorAll(`[id="${id}"]`)) {
+    elem.remove();
+  }
+
+  // Remove from dynamicPages
+  const index = dynamicPages.value.findIndex(page => page.id === id);
+  if (index !== -1) {
+    // remove from dynamicTabs (should be same ID)?
+    dynamicPages.value.splice(index, 1);
+    dynamicTabs.value.splice(index, 1);
+  }
+
+  // console.log(dynamicPages.value.length);
+}
+
+
+
+function setFocus(target) {
+  var n = 0;
+
+  
+  if (target.classList.contains('window')) {
+    
+    // if window selected
+    document.querySelectorAll('.window').forEach(function(win) {
+      win.classList.remove('active');
+      if (Number(win.style.zIndex) > Number(target.style.zIndex)) {
+        win.style.zIndex = Number(win.style.zIndex) - 1;
+        // console.log(Number(win.style.zIndex) + " > " + Number(target.style.zIndex));
+        n += 1;
+      }
+      else {
+        // console.log(Number(win.style.zIndex) + " < " + Number(target.style.zIndex));
+      }
+    });
+    target.classList.add('active');
+    // console.log("ACTIVATED! from z=" + Number(target.style.zIndex) + " to " + (Number(target.style.zIndex) + n));
+    target.style.zIndex = Number(target.style.zIndex) + n;
+    
+
+
+    // set taskbar tab to active
+    // document.querySelectorAll('.task-tab').forEach(function(tasktab) {
+    //   tasktab.classList.remove('active');
+    // });
+    // const window_id = target.getAttribute('id');
+    // document.querySelectorAll(`[id="${ window_id }"]`).forEach(function(tasktab) {
+    //   tasktab.classList.add('active');
+    // });
+    // console.log("Active ID: " + target.getAttribute('id'));
+    document.querySelectorAll('.task-tab').forEach(function(tasktab) {
+      tasktab.classList.remove('active');
+    });
+    document.querySelectorAll(`.task-tab[id='${ target.getAttribute('id') }']`).forEach(function(tasktab) {
+      tasktab.classList.add('active');
+    });
+  }
+  else if (target.classList.contains('task-tab')) {
+    // if taskbar tab was selected (same ID as window)
+    
+    let id = target.getAttribute('id');
+    
+    // set active taskbar tab
+    document.querySelectorAll('.task-tab').forEach(function(tasktab) {
+      tasktab.classList.remove('active');
+    });
+    target.classList.add('active');
+
+    
+    // set active window
+    let targetWindow = document.querySelector(`.window[id='${ id }']`);
+    document.querySelectorAll('.window').forEach(function(win) {
+      win.classList.remove('active');
+      if (Number(win.style.zIndex) > Number(targetWindow.style.zIndex)) {
+        win.style.zIndex = Number(win.style.zIndex) - 1;
+        n += 1
+      }
+    });
+    targetWindow.classList.add('active');
+
+    targetWindow.style.zIndex = Number(targetWindow.style.zIndex) + n;
+
+  }
+  else {
+    document.querySelectorAll('.window').forEach(function(window) {
+      window.classList.remove('active');
+    });
+  }
+}
 
 
 onMounted(() => {
@@ -152,7 +270,7 @@ onMounted(() => {
     // console.log("YAAA");
     const clickedElem = event.target;
 
-    const foundElem = clickedElem.closest('.window, #desktop, .d-icon');
+    const foundElem = clickedElem.closest('.window, #desktop, .d-icon, .task-tab');
 
     if (foundElem) {
       setFocus(foundElem);
@@ -169,7 +287,7 @@ onMounted(() => {
 
 <style scoped>
   
-  body {
+body {
   margin: 0;
 
   
@@ -304,7 +422,10 @@ onMounted(() => {
   display: flex;
   flex-direction: row;
 }
-#taskbar #task-tabs .task-tab {
+
+
+/* taskbar tabs */
+.task-tab {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -315,18 +436,21 @@ onMounted(() => {
   margin-top: 4px;
   margin-bottom: 2px;
 }
-#taskbar #task-tabs .task-tab img {
+.task-tab img {
   width: 16px;
   height: 16px;
   padding: 0 6px;
 }
-#taskbar #task-tabs .task-tab a {
+.task-tab a {
   color: #ffffff;
 }
-#taskbar #task-tabs .task-tab.active {
+.task-tab.active {
   background: #1E52B7;
   border: 1px inset #001331;
 }
+
+
+
 
 #taskbar #task-notifs {
   display: flex;
