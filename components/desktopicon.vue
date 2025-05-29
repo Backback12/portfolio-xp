@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop-icon">
+  <div class="desktop-icon" ref="desktop_icon" @dblclick="doubleClick()">
     <img :src="img">
     <div class="name"><span>{{ name }}</span></div>
   </div>
@@ -9,8 +9,23 @@
 const props = defineProps({
   img: { type: String, required: true },
   name: { type: String, required: true },
-  fnc: { type: String, required: false},
-})
+  doubleClick: Function,
+});
+
+function doubleClickHandler() {
+
+}
+
+
+// const desktop_icon = ref(null);
+// onMounted(() => {
+//   desktop_icon.value.addEventListener('dblclick', (event) => {
+//     // console.log("CLICKED");
+//     if (props.open) {
+//       console.log("OK IM GOING TO OPEN " + props.open);
+//     }
+//   });
+// });
 </script>
 
 

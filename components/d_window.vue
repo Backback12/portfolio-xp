@@ -32,9 +32,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 9h7M2 10h7" /></svg>
           </div>
           
-          <div class="button maximize"
+          <!-- <div class="button maximize"
                :class="{ disabled: !resizable}" 
                :disabled="!resizable"
+               @click="btn_maximize"> -->
+          <div class="button maximize"
                @click="btn_maximize">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path stroke="#000000" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" /></svg>
@@ -73,6 +75,9 @@ const props = defineProps({
   set_width: { type: Number, required: false},
   set_height: { type: Number, required: false},
   tool_menu: { type: Object, required: false, default: {"File": "", "Edit": "", "View": "", "Favourites": "", "Tools": "", "Help": ""}}
+  // set_width: { type: String, required: false},
+  // set_height: { type: String, required: false},
+  // tool_menu: { type: String, required: false, default: '{"File": "", "Edit": "", "View": "", "Favourites": "", "Tools": "", "Help": ""}'}
 });
 
 
@@ -97,8 +102,12 @@ function btn_maximize() {
   // maximize target
   // if maximized... return to before size
   let target = windowRef.value;
+  // console.log("btn_maximize: Attempting to maximize");
 
-  if (!target) return;
+  if (!target) {
+    // console.warn("btn_maximize: COULDNT FIND TARGET WHATTTT");
+    return;
+  }
 
   
   if (target.getAttribute('maximized') == 'true') {
@@ -209,6 +218,8 @@ function dragMoveListener (event) {
 
 
 onMounted(() => {
+  // console.log('d_window.vue MOUNTED');
+
   // windowRef.value.style.zIndex = document.querySelector("#windows").children.length;
   var maxZ = 0;
   document.querySelectorAll('.window').forEach(window => {

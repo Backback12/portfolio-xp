@@ -1,6 +1,7 @@
 <template>
   
   <d_window title="EGG GAME" :resizable=false :set_width="384" :set_height="256" :tool_menu="{'Game': '', 'About': ''}">
+  <!-- <d_window title="EGG GAME" :tool_menu="{'Game': '', 'About': ''}"> -->
     
     <div draggable="false" ref="contentRef" class="content" :draggable="false">
       <span class="title">FEED EGGS</span>

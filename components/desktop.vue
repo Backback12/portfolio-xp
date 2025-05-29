@@ -3,18 +3,21 @@
     <div id="upper-screen">
       <div id="desktop">
         <!-- Desktop Icons Container -->
-        <desktopicon img="/assets/system/drone.png" name="Drone Photos"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Egg Game" :double-click="() => addWindow('page_egg')"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Drone Photos" :double-click="() => addWindow('page_drone')"></desktopicon>
+        <!-- <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
-        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
-        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
+        <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon> -->
       </div>
-      <div id="windows">
+      <div id="windows" ref="windows">
         <!-- Windows Container -->
 
-        <egg></egg>
-        <d_window set_width="800" set_height="150" title="Home Title" tool_menu="">
+        <!-- <egg></egg> -->
+
+        <!-- Title window -->
+        <!-- <d_window :set_width=800 :set_height=150 title="Home Title" :tool_menu="null">
           <div style="display: flex; align-items: center; justify-content: center;
                   background: #202020; height: 100%; flex-direction: column;">
             <h1 style="text-align: center; font-size: 2rem; margin: 0; color: #d0d0d0; text-shadow: 5px 5px 2px #800000, -5px 5px 2px #000060;">
@@ -24,43 +27,31 @@
               Web Portfolio
             </h1>
           </div>
-        </d_window>
-
-
-        <page_drone></page_drone>
-        <!-- <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
-        </d_window>
-        <d_window>
-          <h1>WINDOW NUMBER TWO</h1>
         </d_window> -->
-        
-        
+
+        <!-- <page_drone></page_drone> -->
+        <!-- <page_drone></page_drone> -->
         <!-- <itchiogame></itchiogame> -->
+        <egg></egg>
+        
+
+        <!-- Dynamic components -->
+        <!-- <component
+          v-for="(page, index) in dynamicPages"
+          :key="page.name + '-' + index + '-' + Math.random()"
+          :is="componentMap[page.name]"
+          v-bind="page.props"
+        /> -->
+        <component
+          v-for="(page, index) in dynamicPages"
+          :key="page.id"
+          :is="componentMap[page.name]"
+          v-bind="page.props"
+        />
+
+        <!-- <component :is="componentMap['page_drone']" /> -->
+        <!-- <component :is="componentMap[dynamicPages[0].name]" v-bind="dynamicPages[0].props" /> -->
+        
       </div>
     </div>
     <div id="taskbar">
@@ -85,9 +76,17 @@
 <script setup>
   import d_window from "~/components/d_window.vue";
   import { useFocus } from "~/composables/useFocus";
+
+  import pageEgg from "~/components/egg.vue"
+  import pageDrone from '~/components/page_drone.vue'
+  // import PageAbout from '~/components/page_about.vue'
+
+  
+
   const { setFocus } = useFocus();
 
 const timeclock = ref(null);
+const windows = ref(null);
 
 function updateTime() {
   if (timeclock.value) {
@@ -101,6 +100,51 @@ function updateTime() {
   };
   setTimeout(updateTime, 1000);
 }
+
+
+
+
+// function addComponent(component) {
+//   const instance = getCurrentInstance();
+//   const vnode = h(component);
+//   const container = document.createElement('div');
+
+//   if (!windows.value) {
+//     // console.warn('Dynamic container not found.')
+//     return;
+//   }
+
+//   windows.value.appendChild(container);
+//   vnode.appContext = instance.appContext;
+
+//   const app = createApp({ render: () => vnode });
+//   app.mount(container);
+// }
+
+let nextId = 0;
+const componentMap = {
+    page_egg: pageEgg,
+    page_drone: pageDrone
+    // page_about: PageAbout,
+}
+
+const dynamicPages = ref([
+  // { name: 'page_egg', props: {} },
+  // { name: 'page_egg', props: {} },
+  // { name: 'page_egg', props: {} },
+  // { name: 'page_about', props: { title: 'About Me' } },
+  // {name: 'page_drone', props: {} },
+  // {name: 'page_drone', props: {} },
+])
+
+function addWindow(name, props = {}) {
+  nextTick(() => {
+    dynamicPages.value.push({ id: nextId, name, props });
+    console.log("added " + name);
+  });
+}
+
+
 
 onMounted(() => {
 
