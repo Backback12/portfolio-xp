@@ -67,12 +67,13 @@
 
 
         <div 
-          class="task-tab" 
+          class="task-tab active" 
           v-for="(item, index) in dynamicTabs"
           :key="item.id"
           :id="item.id"
         >
-          <img src="/assets/egg/egg_egg.png"><a>{{ item.name }}</a>
+          <!-- <img src="/assets/egg/egg_egg.png"><a>{{ item.name }}</a> -->
+          <img :src="item.icon"><a>{{ item.title }}</a>
         </div>
 
       </div>
@@ -158,16 +159,13 @@ let nextId = 0;
 function addWindow(name, props = {}) {
   
   // pass props for every window
-  // props.id = nextId++;
-  // or
   props.id = crypto.randomUUID();
   props.onClose = closeWindow;
+  props.addTab = addTab;
+  props.setFocus = setFocus;
   props.initialZ = dynamicPages.value.length + 1;
 
   dynamicPages.value.push({ id: props.id, name, props });
-  dynamicTabs.value.push({ id: props.id, name: name });
-
-  console.log(dynamicPages.value.length);
 }
 
 function closeWindow(id) {
@@ -182,35 +180,57 @@ function closeWindow(id) {
   if (index !== -1) {
     // remove from dynamicTabs (should be same ID)?
     dynamicPages.value.splice(index, 1);
-    dynamicTabs.value.splice(index, 1);
+    // dynamicTabs.value.splice(index, 1);
   }
 
   // console.log(dynamicPages.value.length);
 }
 
+function addTab(id, title="no title", icon="") {
+  dynamicTabs.value.push({ id: id, title: title, icon: icon });
+
+  // focus tab after window and tab is initialized
+  // setFocus(document.querySelector(`.tasktab[id='${ id }']`));
+}
+function closeTab(id) {
+  const index = dynamicTabs.value.findIndex(page => page.id === id);
+  if (index !== -1) {
+    dynamicTabs.value.splice(index, 1);
+  }
+}
 
 
-function setFocus(target) {
+function setFocus(target, updateZIndex=true) {
   var n = 0;
 
   
   if (target.classList.contains('window')) {
     
     // if window selected
-    document.querySelectorAll('.window').forEach(function(win) {
-      win.classList.remove('active');
-      if (Number(win.style.zIndex) > Number(target.style.zIndex)) {
-        win.style.zIndex = Number(win.style.zIndex) - 1;
-        // console.log(Number(win.style.zIndex) + " > " + Number(target.style.zIndex));
-        n += 1;
-      }
-      else {
-        // console.log(Number(win.style.zIndex) + " < " + Number(target.style.zIndex));
-      }
-    });
+    if (updateZIndex) {
+      document.querySelectorAll('.window').forEach(function(win) {
+        win.classList.remove('active');
+        if (Number(win.style.zIndex) > Number(target.style.zIndex)) {
+          win.style.zIndex = Number(win.style.zIndex) - 1;
+          // console.log(Number(win.style.zIndex) + " > " + Number(target.style.zIndex));
+          n += 1;
+        }
+        else {
+          // console.log(Number(win.style.zIndex) + " < " + Number(target.style.zIndex));
+        }
+      });
+      // console.log("ACTIVATED! from z=" + Number(target.style.zIndex) + " to " + (Number(target.style.zIndex) + n));
+      target.style.zIndex = Number(target.style.zIndex) + n;
+    }
+    else {
+      // dont update Z
+      document.querySelectorAll('.window').forEach(function(win) {
+        win.classList.remove('active');
+      });
+    }
+      
     target.classList.add('active');
-    // console.log("ACTIVATED! from z=" + Number(target.style.zIndex) + " to " + (Number(target.style.zIndex) + n));
-    target.style.zIndex = Number(target.style.zIndex) + n;
+    // console.log('setFocus: new Z is ' + target.style.zIndex);
     
 
 
@@ -257,8 +277,14 @@ function setFocus(target) {
 
   }
   else {
+    // remove active from all windows
     document.querySelectorAll('.window').forEach(function(window) {
       window.classList.remove('active');
+    });
+    
+    // remove active from all taskbar tabs
+    document.querySelectorAll('.task-tab').forEach(function(tasktab) {
+      tasktab.classList.remove('active');
     });
   }
 }
@@ -433,8 +459,10 @@ body {
   background: #3980F4;
   border: 1px outset #3980F4;
   border-radius: 3px;
-  margin-top: 4px;
-  margin-bottom: 2px;
+  /* margin-top: 4px; */
+  /* margin-bottom: 2px; */
+  margin: 4px 1px 2px;
+  user-select: none;
 }
 .task-tab img {
   width: 16px;
@@ -447,6 +475,13 @@ body {
 .task-tab.active {
   background: #1E52B7;
   border: 1px inset #001331;
+}
+
+.task-tab:hover {
+  background: linear-gradient(135deg, #53A3FF 0%, #53A3FF 30%);
+}
+.task-tab.active:hover {
+  background: linear-gradient(135deg, #3576F3 0%, #3576F3 30%);
 }
 
 

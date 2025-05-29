@@ -58,7 +58,14 @@
         <!-- <div class="button">Favourites</div> -->
         <!-- <div class="button">Tools</div> -->
         <!-- <div class="button">Help</div> -->
-         <div v-for="(list, name) in tool_menu" :key="name" class="button">{{ name }}</div>
+        <div v-for="(list, name) in tool_menu" :key="name" class="button toolbar-dropdown">
+          <a class="title">{{ name }}</a>
+          <div class="dropdown-items">
+            <a>Item 1</a>
+            <a>Item 2</a>
+            <a>Item 3</a>
+          </div>
+        </div>
       </div>
       <div class="content">
         <!-- HERE IS MY CONTENT -->
@@ -83,8 +90,10 @@ const props = defineProps({
   // tool_menu: { type: String, required: false, default: '{"File": "", "Edit": "", "View": "", "Favourites": "", "Tools": "", "Help": ""}'}
   
   onClose: { type: Function, required: true, default: () => {} },
-  initialZ: { type: Number, required: true, default: -1 }
+  initialZ: { type: Number, required: true, default: -1 },
   // onClose: () => void;
+  addTab: { type: Function, required: true, default: () => {} },
+  setFocus: { type: Function, required: true, default: () => {} },
 });
 defineOptions({ inheritAttrs: true });
 
@@ -94,7 +103,7 @@ import interact from 'interactjs'
   // interact('.window')
 
 // import { useFocus } from '~/composables/useFocus';
-const { setFocus } = useFocus();
+// const { setFocus } = useFocus();
 
 const windowRef = ref(null);
 
@@ -214,20 +223,21 @@ function dragMoveListener (event) {
 
 
 onMounted(() => {
-  // console.log('d_window.vue MOUNTED');
+  // add tab after initializing
 
-  // windowRef.value.style.zIndex = document.querySelector("#windows").children.length;
-  // var maxZ = 0;
-  // document.querySelectorAll('.window').forEach(window => {
-  //   maxZ = Math.max(maxZ, window.style.zIndex);
-  // });
-  // windowRef.value.style.zIndex = maxZ + 1;
-  // // console.log("initialized with z = " + (maxZ+1));
-  // windowRef.value.setAttribute('window-id', maxZ + 1);
+  props.addTab(props.id, props.title, props.icon);
+
+  props.setFocus(windowRef.value, false);
+
+  // console.log('d_window.vue MOUNTED with Z index: ' + props.initialZ);
+
+  
 
   windowRef.value.style.zIndex = props.initialZ;
-  console.log("Set new window z to " + props.initialZ);
+  
 
+
+  // set up interact.js
   interact(windowRef.value)
     .draggable({
       // intertia: true,
@@ -477,11 +487,11 @@ onMounted(() => {
   display: flex;
 }
 .window .toolbar .button {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  padding: 0 6px;
-  margin: 1px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* align-content: center; */
+  /* padding: 0 6px; */
+  /* margin: 1px; */
 
   font-size: 10px;
   letter-spacing: 0;
@@ -490,6 +500,35 @@ onMounted(() => {
   background: #1660E8;
   color: #FFFFFF;
 }
+
+.toolbar-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.toolbar-dropdown .title {
+  padding: 2px 6px;
+}
+.toolbar-dropdown:hover .dropdown-items {
+  display: block;
+}
+.toolbar-dropdown .dropdown-items {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.toolbar-dropdown .dropdown-items a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+
+
+
 
 
 .window .content {
