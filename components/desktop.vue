@@ -115,12 +115,14 @@ import pageEgg from "~/components/page_egg.vue"
 import pageDrone from '~/components/page_drone.vue'
 import pageItchIO from '~/components/itchiogame.vue'
 import pageProjects from '~/components/page_projects.vue'
+import pageTitle from '~/components/page_title.vue'
 
 const pageComponentMap = {
   page_egg: pageEgg,
   page_drone: pageDrone,
   page_itchio: pageItchIO,
   page_projects: pageProjects,
+  page_title: pageTitle,
 }
   
 
@@ -338,6 +340,7 @@ onMounted(() => {
 
   // set initial windows
   addWindow('page_projects');
+  addWindow('page_title');
 });
 </script>
 
