@@ -3,8 +3,26 @@
     <div id="upper-screen">
       <div id="desktop">
         <!-- Desktop Icons Container -->
-        <desktopicon img="/assets/system/drone.png" name="Drone Photos" :double-click="() => addWindow('page_drone')"></desktopicon>
-        <desktopicon img="/assets/egg/egg_egg.png" name="Egg Game" :double-click="() => addWindow('page_egg')"></desktopicon>
+        <desktopicon 
+          img="/assets/egg/egg_egg.png" 
+          name="Projects" 
+          :double-click="() => addWindow('page_projects')"
+        />
+        <desktopicon 
+          img="/assets/system/drone.png" 
+          name="Drone Photos" 
+          :double-click="() => addWindow('page_drone')"
+        />
+        <desktopicon 
+          img="/assets/egg/egg_egg.png" 
+          name="Egg Game" 
+          :double-click="() => addWindow('page_egg')"
+        />
+        <desktopicon 
+          img="/assets/system/chimp_32.png" 
+          name="Chimp Want Banana" 
+          :double-click="() => addWindow('page_itchio', {title: 'BRUHHH'})"
+        />
         <!-- <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
@@ -91,14 +109,18 @@
   
 <script setup>
 // import d_window from "~/components/d_window.vue";
-import { useFocus } from "~/composables/useFocus";
+// import { useFocus } from "~/composables/useFocus";
 
 import pageEgg from "~/components/page_egg.vue"
 import pageDrone from '~/components/page_drone.vue'
+import pageItchIO from '~/components/itchiogame.vue'
+import pageProjects from '~/components/page_projects.vue'
 
 const pageComponentMap = {
   page_egg: pageEgg,
-  page_drone: pageDrone
+  page_drone: pageDrone,
+  page_itchio: pageItchIO,
+  page_projects: pageProjects,
 }
   
 
@@ -151,6 +173,8 @@ const dynamicPages = ref([
   // { name: 'page_about', props: { title: 'About Me' } },
   // {name: 'page_drone', props: {} },
   // {name: 'page_drone', props: {} },
+
+  // {name: 'page_projects', props: {id: crypto.randomUUID(), onClose: closeWindow, addTab: addTab, setFocus: setFocus, initialZ: 0 + 1} }
 ]);
 
 const dynamicTabs = ref([]);  // taskbar tabs
@@ -308,6 +332,12 @@ onMounted(() => {
   // "YYYY-MM-DDTHH:mm:ss.sssZ"
 
   updateTime();  
+
+
+
+
+  // set initial windows
+  addWindow('page_projects');
 });
 </script>
 

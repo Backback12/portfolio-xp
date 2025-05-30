@@ -1,6 +1,6 @@
 <template>
   
-  <d_window title="ChimpWantBanana" :resizable=true :set_width="384" :set_height="256" :tool_menu="{'Game': '', 'About': ''}">
+  <d_window :title="title" :icon="icon" :resizable=true :set_width="384" :set_height="256" :tool_menu="{'Game': '', 'About': ''}">
     
     <div class="game-div">
       <iframe 
@@ -16,7 +16,10 @@
 </template>
 
 <script setup>
-
+const props = defineProps({
+  title: { type: String },
+  icon: { type: String }
+});
 </script>
 
 

@@ -186,42 +186,6 @@ function dragMoveListener (event) {
 
 
 
-// function setFocus(target) {
-//   var n = 0;
-
-  
-//   if (target.classList.contains('window')) {
-//     // if window selected
-//     document.querySelectorAll('.window').forEach(function(window) {
-//       window.classList.remove('active');
-//       if (window.style.zIndex > target.style.zIndex) {
-//         window.style.zIndex = Number(window.style.zIndex) - 1;
-//         n += 1;
-//       }
-//     });
-//     target.classList.add('active');
-//     console.log("ACTIVATED! from z=" + Number(target.style.zIndex) + " to " + (Number(target.style.zIndex) + n));
-//     target.style.zIndex = Number(target.style.zIndex) + n;
-    
-
-
-//     // set taskbar tab to active
-//     document.querySelectorAll('.task-tab').forEach(function(tasktab) {
-//       tasktab.classList.remove('active');
-//     });
-//     const window_id = target.getAttribute('window-id');
-//     document.querySelectorAll(`[window-id="${ window_id }"]`).forEach(function(tasktab) {
-//       tasktab.classList.add('active');
-//     });
-//   }
-//   else {
-//     document.querySelectorAll('.window').forEach(function(window) {
-//       window.classList.remove('active');
-//     });
-//   }
-// }
-
-
 onMounted(() => {
   // add tab after initializing
 
@@ -514,10 +478,12 @@ onMounted(() => {
 .toolbar-dropdown .dropdown-items {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #FFFFFF;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+  box-shadow: 2px 2px 1px 0 #646464;
+  border: solid 1px #808080;
+  z-index: 99999;
 }
 .toolbar-dropdown .dropdown-items a {
   color: black;
@@ -525,7 +491,9 @@ onMounted(() => {
   text-decoration: none;
   display: block;
 }
-
+.toolbar-dropdown .dropdown-items a:hover {
+  background-color: #003599;
+}
 
 
 
