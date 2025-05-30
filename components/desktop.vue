@@ -4,7 +4,7 @@
       <div id="desktop">
         <!-- Desktop Icons Container -->
         <desktopicon 
-          img="/assets/egg/egg_egg.png" 
+          img="/assets/system/newspaper.png" 
           name="Projects" 
           :double-click="() => addWindow('page_projects')"
         />
@@ -181,15 +181,25 @@ const dynamicPages = ref([
 
 const dynamicTabs = ref([]);  // taskbar tabs
 
-let nextId = 0;
+
 function addWindow(name, props = {}) {
   
   // pass props for every window
   props.id = crypto.randomUUID();
   props.onClose = closeWindow;
+  props.minimize = toggleMinimizeWindow;
   props.addTab = addTab;
   props.setFocus = setFocus;
   props.initialZ = dynamicPages.value.length + 1;
+  
+  // offset window based on how many windows are currently open?
+  let numWindows = dynamicPages.value.length;
+  let offsetX = 100 + (numWindows % 10) * 30 + Math.floor(numWindows / 10) * 40;
+  let offsetY = (numWindows % 10) * 30 + Math.floor(numWindows / 10) * 10;
+
+  props.start_x = offsetX;
+  props.start_y = offsetY;
+
 
   dynamicPages.value.push({ id: props.id, name, props });
 }
@@ -210,6 +220,38 @@ function closeWindow(id) {
   }
 
   // console.log(dynamicPages.value.length);
+}
+
+
+function toggleMinimizeWindow(id) {
+  console.log("toggleMinimizeWindow: running");
+  // toggle wether the window is minimized or not
+  
+  // get target window
+  let target = document.querySelector(`.window[id='${ id }']`);
+
+  if (!target) {
+    console.log("toggleMinimizeWindow: Could not find window to toggle minimize!");
+    return;
+  }
+
+  if (target.getAttribute('minimized') == 'true') {
+    console.log("minimize to full size");
+    // MAXIMIZE TO ORIGINAL SIZE
+    target.setAttribute('minimized', false);
+    target.classList.remove('minimized');
+  }
+  else {
+    console.log("minimize down");
+    // MINIMIZE TO TASK BAR
+    target.setAttribute('minimized', true);
+    target.classList.add('minimized');
+  
+    // target.setAttribute('maxi-x', target.getAttribute('data-x'));
+    // target.setAttribute('maxi-y', target.getAttribute('data-y'));
+    // target.setAttribute('maxi-w', target.offsetWidth);
+    // target.setAttribute('maxi-h', target.offsetHeight);
+  }
 }
 
 function addTab(id, title="no title", icon="") {
@@ -290,6 +332,13 @@ function setFocus(target, updateZIndex=true) {
     
     // set active window
     let targetWindow = document.querySelector(`.window[id='${ id }']`);
+    // if window is minimized, show it
+    
+    if (targetWindow.getAttribute('minimized') == 'true') {
+      targetWindow.classList.remove('minimized');
+      targetWindow.setAttribute('minimized', false);
+    }
+
     document.querySelectorAll('.window').forEach(function(win) {
       win.classList.remove('active');
       if (Number(win.style.zIndex) > Number(targetWindow.style.zIndex)) {
@@ -340,7 +389,7 @@ onMounted(() => {
 
   // set initial windows
   addWindow('page_projects');
-  addWindow('page_title');
+  addWindow('page_title', { start_maximized: true });
 });
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <d_window title="Title" icon="" :set_width="1000" :set_height="400">
+  <d_window title="Title" icon="/assets/system/newspaper.png" :set_width="1000" :set_height="400" :start_maximized="true">
     <div class="content">
       <h1>Connor Pagtakhan's Web Portfolio</h1>
       

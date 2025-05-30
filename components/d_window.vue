@@ -94,6 +94,13 @@ const props = defineProps({
   // onClose: () => void;
   addTab: { type: Function, required: true, default: () => {} },
   setFocus: { type: Function, required: true, default: () => {} },
+
+  minimize: { type: Function, required: true, default: () => {} },
+
+  start_maximized: { type: Boolean, required: false, default: false },
+
+  start_x: {type: Number, required: false, default: 0},
+  start_y: {type: Number, required: false, default: 0},
 });
 defineOptions({ inheritAttrs: true });
 
@@ -114,6 +121,8 @@ const windowRef = ref(null);
 
 function btn_minimize(target) {
   // need taskbar functionality first
+
+  props.minimize(props.id);
 }
 function btn_maximize() {
   // maximize target
@@ -122,7 +131,7 @@ function btn_maximize() {
   // console.log("btn_maximize: Attempting to maximize");
 
   if (!target) {
-    // console.warn("btn_maximize: COULDNT FIND TARGET WHATTTT");
+    console.warn("btn_maximize: COULDNT FIND TARGET WHATTTT");
     return;
   }
 
@@ -281,7 +290,13 @@ onMounted(() => {
 
     
     
-    
+    // apply starting offset
+    // windowRef.value.setAttribute('data-x', props.start_x);
+    // windowRef.value.style.left = props.start_x;
+    windowRef.value.style.transform = `translate(${props.start_x}px, ${props.start_y}px)`
+    // windowRef.value.setAttribute('data-y', props.start_y);
+
+    console.log("received " + props.start_x + " and " + props.start_y);
     
     // if (props.set_width) {
     //   windowRef.value.style.width = String(props.set_width);
@@ -290,10 +305,13 @@ onMounted(() => {
     // if (props.set_height) {
     //   windowRef.value.style.height = props.set_height;
     // }
-    
+    if (props.start_maximized) {
+      btn_maximize();
+    }  
   })
 
 
+  
 </script>
 
 <style scoped>
@@ -596,5 +614,9 @@ onMounted(() => {
   border-left: none;
   border-right: none;
   border-bottom: none;
+}
+
+.window.minimized {
+  display: none;
 }
 </style>

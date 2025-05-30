@@ -11,21 +11,6 @@ const props = defineProps({
   name: { type: String, required: true },
   doubleClick: Function,
 });
-
-function doubleClickHandler() {
-
-}
-
-
-// const desktop_icon = ref(null);
-// onMounted(() => {
-//   desktop_icon.value.addEventListener('dblclick', (event) => {
-//     // console.log("CLICKED");
-//     if (props.open) {
-//       console.log("OK IM GOING TO OPEN " + props.open);
-//     }
-//   });
-// });
 </script>
 
 
@@ -33,7 +18,9 @@ function doubleClickHandler() {
 .desktop-icon {
   width: 64px;
   height: 64px;
-  margin: 12px;
+  /* margin: 8px; */
+  padding: 8px;
+  /* border: solid 1px red; */
 }
 .desktop-icon img {
   position: absolute;
@@ -45,8 +32,8 @@ function doubleClickHandler() {
   padding-top: 34px;
   text-align: center;
   align-items: center;
-  font-weight: 100;
-  letter-spacing: 0;
+  font-weight: 0;
+  letter-spacing: -0px;
 }
 .desktop-icon span {
   color: white;

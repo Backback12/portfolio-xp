@@ -1,5 +1,5 @@
 <template>
-<d_window title="Projects" icon="">
+<d_window title="Projects" icon="/assets/system/newspaper.png">
   <h1>Projects</h1>
   <p>Hi this is a page of my projects and stuff yeahhhh</p>
   
