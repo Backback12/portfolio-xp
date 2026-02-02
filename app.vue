@@ -42,11 +42,11 @@
 
 
   useHead({
-  title: "Connor's Website",
+  title: "Connor's Stuff",
   meta: [
-    { name: 'description', content: "Connor's website site page" },
-    { property: 'og:title', content: "Connor's Website" },
-    { property: 'og:description', content: "Connor's website site page" },
+    { name: 'description', content: "Connor's Stuff site page" },
+    { property: 'og:title', content: "Connor's Stuff" },
+    { property: 'og:description', content: "Connor's Stuff site page" },
     // { property: 'og:image', content: '' },
     // { property: 'og:url', content: '' },
   ]

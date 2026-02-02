@@ -1,9 +1,10 @@
 <template>
-  <d_window title="Title" icon="/assets/system/newspaper.png" :set_width="1000" :set_height="400" :start_maximized="true">
+  <d_window title="Title Window" icon="/assets/system/newspaper.png" :set_width="1000" :set_height="400" :start_maximized="true">
     <div class="content">
-      <h1>Connor Pagtakhan's Web Portfolio</h1>
+      <h1>Connor Stuff</h1>
       
       <p>! ! ! This site is a work in progress ! ! !</p>
+      
     </div>
   
   </d_window>

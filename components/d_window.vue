@@ -61,9 +61,8 @@
         <div v-for="(list, name) in tool_menu" :key="name" class="button toolbar-dropdown">
           <a class="title">{{ name }}</a>
           <div class="dropdown-items">
-            <a>Item 1</a>
-            <a>Item 2</a>
-            <a>Item 3</a>
+            <a>Test1</a>
+            <a>Test2</a>
           </div>
         </div>
       </div>
@@ -217,16 +216,16 @@ onMounted(() => {
       allowFrom: '.title-bar',
       ignoreFrom: '.button',
 
-      modifiers: [
-        interact.modifiers.restrictRect({
-          restriction: 'parent',
-          endOnly: true,
-        }),
-        // interact.modifiers.restrict({
-        //   restriction: 'parent',
-        //   endOnly: true
-        // })
-      ],
+      // modifiers: [
+      //   interact.modifiers.restrictRect({
+      //     restriction: 'parent',
+      //     endOnly: true,
+      //   }),
+      //   // interact.modifiers.restrict({
+      //   //   restriction: 'parent',
+      //   //   endOnly: true
+      //   // })
+      // ],
       autoScroll: false,
       listeners: {
         move: dragMoveListener,
@@ -293,7 +292,9 @@ onMounted(() => {
     // apply starting offset
     // windowRef.value.setAttribute('data-x', props.start_x);
     // windowRef.value.style.left = props.start_x;
-    windowRef.value.style.transform = `translate(${props.start_x}px, ${props.start_y}px)`
+    windowRef.value.style.transform = `translate(${props.start_x}px, ${props.start_y}px)`;
+    windowRef.value.setAttribute('data-x', props.start_x);
+    windowRef.value.setAttribute('data-y', props.start_y);
     // windowRef.value.setAttribute('data-y', props.start_y);
 
     console.log("received " + props.start_x + " and " + props.start_y);
@@ -497,7 +498,7 @@ onMounted(() => {
   display: none;
   position: absolute;
   background-color: #FFFFFF;
-  min-width: 160px;
+  min-width: 120px;
   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
   box-shadow: 2px 2px 1px 0 #646464;
   border: solid 1px #808080;
@@ -505,12 +506,14 @@ onMounted(() => {
 }
 .toolbar-dropdown .dropdown-items a {
   color: black;
-  padding: 12px 16px;
+  padding: 4px 16px;
   text-decoration: none;
   display: block;
 }
 .toolbar-dropdown .dropdown-items a:hover {
-  background-color: #003599;
+  background-color: #1548a7;
+  /* background-color: #1660E8; */
+  color: white;
 }
 
 
@@ -526,8 +529,8 @@ onMounted(() => {
   /* border-right: 4px solid var(--window-border-light); */
   /* border-bottom: 4px solid var(--window-border-light); */
 
-  padding: 0; 
   margin: 0;
+  padding: 0; 
 
   border-left: 4px solid #7998DF;
   border-right: 4px solid #7998DF;
@@ -542,9 +545,10 @@ onMounted(() => {
   /* overflow-y: scroll; */
 
   
-  overflow-x: hidden;
-  /* overflow-y: auto; */
-  overflow-y: hidden;
+  /* overflow-x: hidden; */
+  /* overflow-y: hidden; */
+  overflow-x: auto;
+  overflow-y: auto;
 
   /* border-radius: 20px 0 20px 20px; */
 }

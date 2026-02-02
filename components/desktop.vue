@@ -23,6 +23,11 @@
           name="Chimp Want Banana" 
           :double-click="() => addWindow('page_itchio', {title: 'BRUHHH'})"
         />
+        <desktopicon 
+          img="/assets/system/smtpsnap.dll_14_9032_1038-0.png" 
+          name="Achievements" 
+          :double-click="() => addWindow('page_achievements')"
+        />
         <!-- <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
         <desktopicon img="/assets/system/drone.png" name="Drone"></desktopicon>
@@ -115,6 +120,7 @@ import pageEgg from "~/components/page_egg.vue"
 import pageDrone from '~/components/page_drone.vue'
 import pageItchIO from '~/components/itchiogame.vue'
 import pageProjects from '~/components/page_projects.vue'
+import pageAchievements from '~/components/page_achievements.vue'
 import pageTitle from '~/components/page_title.vue'
 
 const pageComponentMap = {
@@ -122,6 +128,7 @@ const pageComponentMap = {
   page_drone: pageDrone,
   page_itchio: pageItchIO,
   page_projects: pageProjects,
+  page_achievements: pageAchievements,
   page_title: pageTitle,
 }
   
@@ -389,6 +396,7 @@ onMounted(() => {
 
   // set initial windows
   addWindow('page_projects');
+  addWindow('page_achievements');
   addWindow('page_title', { start_maximized: true });
 });
 </script>
