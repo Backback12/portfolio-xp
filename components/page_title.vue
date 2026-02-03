@@ -4,6 +4,8 @@
       <h1>Connor Stuff</h1>
       
       <p>! ! ! This site is a work in progress ! ! !</p>
+
+      <p>! ! This is best viewed on a desktop ! !</p>
       
     </div>
   
