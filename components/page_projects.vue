@@ -41,6 +41,15 @@
   </div>
 
   <div class="project">
+    <h3 class="title">Custom Macropad - 2022</h3>
+    <div class="content">
+      <ul>
+        <li>KiCad, PCB Manufacturing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="project">
     <h3 class="title">CassettifyMixtape - 2023</h3>
     <div class="content">
       <ul>
@@ -65,6 +74,7 @@
         <!-- Arduino Gameboi - Fully 3D printed powered by Arduino Nano
         <br>
         Arduino Nano, 128x64 OLED Display, 6 Buttons, Battery Powered -->
+        <img style="aspect-ratio: 3 / 2; object-fit: cover;" draggable="false" loading="lazy" src="/public/assets/projects/balance-bot.png"/>
       </div>
     </div>
   </div>
@@ -82,6 +92,7 @@
 <style scoped>
 .window-content {
   padding: 8px;
+  user-select: text;
 }
 .project {
 

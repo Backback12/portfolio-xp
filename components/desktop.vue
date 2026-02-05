@@ -537,6 +537,7 @@ body {
   margin-left: 20px;
   display: flex;
   flex-direction: row;
+  overflow-x: hidden;
 }
 
 
