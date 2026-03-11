@@ -26,10 +26,12 @@
         <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/cec_2024.webp"/>
         <li>CIRC 2024 - Drumheller, AB</li>
         <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/circ_2024.webp"/>
+        <!-- <li>Life Science Olympics MISC 2024 - Winnipeg, MB</li> -->
         <li>IEEExtreme 2024 - Winnipeg, MB</li>
         <li>UMEC 2024 - Winnipeg, MB</li>
         <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/umec_2024.webp"/>
         <li>CUSEC 2025 - Montreal, QB</li>
+        <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/cusec_2025.webp"/>
         <li>WEC 2025 - Saskatoon, SK</li>
         <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/wec_2025.webp"/>
         <li>CIRC 2025 - Drumheller, AB</li>
@@ -39,6 +41,9 @@
         <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/umec_2025.webp"/>
         <li>WEC 2026 - Edmonton, AB</li>
         <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/wec_2026.webp"/>
+        <li>CSSA CTF 2026 - Winnipeg, MB</li>
+        <li>UMake 2026 - Winnipeg, MB</li>
+        <img style="aspect-ratio: 3 / 2; object-fit: cover; height: 80px;" draggable="false" loading="lazy" src="/public/assets/blog/umake_2026_1.webp"/>
         <li>*CIRC 2026 - Drumheller, AB</li>
       </ul>
       
