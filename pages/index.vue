@@ -20,7 +20,7 @@
           :key="win.id"
           :window-data="win"
         >
-          <component :is="win.component" v-bind="win.props" />
+          <component :is="win.component" v-bind="win.props" :window-id="win.id" />
         </OsWindowFrame>
       </div>
     </div>
@@ -43,7 +43,8 @@ const { windows, activeWindowId, openWindow } = useWindowManager()
 // Map your app keys to the actual Vue components
 const Apps = {
   achievements: resolveComponent('AppsAchievements'),
-  projects: resolveComponent('AppsProjects')
+  projects: resolveComponent('AppsProjects'),
+  title: resolveComponent('AppsTitle')
 }
 
 function openApp(appKey) {
@@ -56,6 +57,7 @@ function openApp(appKey) {
       width: 500,
       height: 400,
       // Will use the default { File, Edit, View } if we omit tool_menu
+      tool_menu: {}
     })
   }
   
@@ -69,10 +71,28 @@ function openApp(appKey) {
       height: 450,
       start_maximized: false,
       // Custom toolbar example
+      // Example in pages/index.vue's openApp() function:
       tool_menu: {
-        "File": ["New Idea", "Save", "Close"],
-        "Filter": ["Hardware", "Software", "Show All"],
-        "Help": ["About Projects"]
+        "Sort": [
+          { label: "Newest to Oldest", action: "sort_desc", checked: true },
+          { label: "Oldest to Newest", action: "sort_asc", checked: false }
+        ]
+      }
+    })
+  }
+
+  if (appKey === 'title') {
+    openWindow({
+      id: 'app-title',
+      title: 'Title',
+      icon: '/assets/system/newspaper.png',
+      component: Apps.title,
+      width: 600,
+      height: 450,
+      start_maximized: true,
+      // Custom toolbar example
+      tool_menu: {
+        
       }
     })
   }
@@ -81,6 +101,9 @@ function openApp(appKey) {
 onMounted(() => {
   openApp('achievements')
   openApp('projects')
+
+
+  openApp('title')
 })
 </script>
 

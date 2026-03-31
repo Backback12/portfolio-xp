@@ -24,14 +24,12 @@
         <div class="button minimize" @click.stop="toggleMinimize(windowData.id)">
           <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges"><path d="M2 9h7M2 10h7" /></svg>
         </div>
-        
         <div class="button maximize" @click.stop="toggleMaximize(windowData.id)">
           <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" viewBox="0 0 12 10" shape-rendering="crispEdges">
             <path v-if="!windowData.isMaximized" d="M1 1h10M1 2h10M1 3h1M10 3h1M1 4h1M10 4h1M1 5h1M10 5h1M1 6h1M10 6h1M1 7h1M10 7h1M1 8h1M10 8h1M1 9h1M10 9h1M1 10h10" />
             <path v-else d="M3 0h8M3 1h8M10 2h1M0 3h8M10 3h1M0 4h8M10 4h1M0 5h1M7 5h1M10 5h1M0 6h1M7 6h1M10 6h1M0 7h1M7 7h1M9 7h2M0 8h1M7 8h1M0 9h1M7 9h1M0 10h8" />
           </svg>
         </div>
-        
         <div class="button close" @click.stop="closeWindow(windowData.id)">
           <svg xmlns="http://www.w3.org/2000/svg" height="10" width="12" shape-rendering="crispEdges"><path d="M2 3h2M8 3h2M3 4h2M7 4h2M4 5h4M5 6h2M4 7h4M3 8h2M7 8h2M2 9h2M8 9h2" /></svg>
         </div>
@@ -42,12 +40,17 @@
       <div v-for="(list, name) in windowData.tool_menu" :key="name" class="button toolbar-dropdown">
         <a class="title">{{ name }}</a>
         <div class="dropdown-items" v-if="list && list.length">
-          <a v-for="(item, idx) in list" :key="idx">{{ item }}</a>
+          <a v-for="(item, idx) in list" :key="idx" @click.stop="handleMenuClick(name, item)">
+            <span style="width: 16px; display: inline-block; font-weight: bold;">
+              <span v-if="item.checked">✓</span>
+            </span>
+            {{ item.label || item }}
+          </a>
         </div>
       </div>
     </div>
     
-    <div class="content">
+    <div class="content scroll-y">
       <slot></slot>
     </div>
   </div>
@@ -73,13 +76,20 @@ const {
 
 const windowRef = ref(null)
 
+// If the inner component registers a listener, this will fire it
+function handleMenuClick(menuName, item) {
+  if (props.windowData.onMenuClick) {
+    props.windowData.onMenuClick(menuName, item)
+  }
+}
+
 onMounted(() => {
   if (!windowRef.value) return
 
   interact(windowRef.value)
     .draggable({
       allowFrom: '.title-bar',
-      ignoreFrom: '.button, .toolbar', // Prevents dragging when clicking menus or buttons
+      ignoreFrom: '.button, .toolbar',
       modifiers: [
         interact.modifiers.restrictRect({
           restriction: 'parent',
@@ -87,6 +97,19 @@ onMounted(() => {
         })
       ],
       listeners: {
+        start(event) {
+          // DRAG TO UN-MAXIMIZE LOGIC
+          if (props.windowData.isMaximized) {
+            toggleMaximize(props.windowData.id)
+            
+            // Center the restored window underneath the mouse cursor
+            const restoredWidth = props.windowData.savedState ? props.windowData.savedState.width : 500
+            updateWindowBounds(props.windowData.id, {
+              x: event.clientX - (restoredWidth / 2),
+              y: event.clientY - 14 // Roughly center on the title bar
+            })
+          }
+        },
         move(event) {
           if (props.windowData.isMaximized) return
           updateWindowBounds(props.windowData.id, {
@@ -97,6 +120,7 @@ onMounted(() => {
       }
     })
     .resizable({
+      margin: 3, // THINNER RESIZE BORDER (in pixels)
       edges: { left: true, right: true, bottom: true, top: true },
       listeners: {
         move(event) {
@@ -116,9 +140,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  if (windowRef.value) {
-    interact(windowRef.value).unset()
-  }
+  if (windowRef.value) interact(windowRef.value).unset()
 })
 </script>
 
@@ -446,5 +468,51 @@ onBeforeUnmount(() => {
 
 .window.minimized {
   display: none;
+}
+
+
+/* ================================================================ */
+/* FULLSCREEN FIX */
+/* ================================================================ */
+.window.maximized {
+  transform: translate(0px, 0px) !important;
+  width: 100% !important;
+  /* Adjust the 30px to match the exact height of your taskbar */
+  height: calc(100% - 30px) !important; 
+  border-radius: 0;
+}
+.window.maximized .title-bar {
+  border-radius: 0;
+}
+
+/* ================================================================ */
+/* XP SCROLLBARS */
+/* ================================================================ */
+.content::-webkit-scrollbar {
+  width: 17px;
+  height: 17px;
+}
+.content::-webkit-scrollbar-track {
+  background: #F0F0F0;
+  border-left: 1px solid #E3E3E3;
+}
+.content::-webkit-scrollbar-thumb {
+  background: #C0C0D0; /* Classic XP scrollbar gray/blue */
+  border: 1px outset #FFF;
+  border-radius: 2px;
+}
+.content::-webkit-scrollbar-thumb:active {
+  background: #A0A0B0;
+  border: 1px inset #FFF;
+}
+.content::-webkit-scrollbar-button {
+  background: #ECE9D8;
+  border: 1px outset #FFF;
+  height: 17px;
+  width: 17px;
+}
+.content::-webkit-scrollbar-button:active {
+  border: 1px inset #FFF;
+  background: #DCD9C8;
 }
 </style>

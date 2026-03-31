@@ -32,7 +32,7 @@ Idk man you should just standardize it once you find a good size like ```300x250
 
 
 # Credits
-### Pixel svgs
+### Pixel SVG icons
 Made Made with [Pixels to Svg](https://codepen.io/shshaw/pen/XbxvNj)
 ### Egg Game 
 Recreation of [Egg Game](https://egggame.org/) by Alec Robbins

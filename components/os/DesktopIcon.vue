@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop-icon" ref="desktop_icon" @dblclick="doubleClick()">
+  <div class="desktop-icon" ref="desktop_icon">
     <img :src="img">
     <div class="name"><span>{{ name }}</span></div>
   </div>
@@ -9,7 +9,6 @@
 const props = defineProps({
   img: { type: String, required: true },
   name: { type: String, required: true },
-  doubleClick: Function,
 });
 </script>
 
