@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         // },
         // { 
         //   src: '/scripts/plain-draggable.js'
-        // }
+        // } 
       ],
     }
   }
