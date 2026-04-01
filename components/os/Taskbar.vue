@@ -1,7 +1,7 @@
 <template>
   <div id="taskbar">
     <div id="start-btn">
-      <img src="/assets/system/imepadsv.exe_14_200_0-0.png"><a>start</a>
+      <img src="/assets/os/imepadsv.exe_14_200_0-0.png"><a>start</a>
     </div>
     
     <div id="task-tabs">

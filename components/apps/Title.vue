@@ -4,7 +4,7 @@
       <!-- <img src="/assets/system/computer.png" alt="Computer Icon" class="main-icon" /> -->
       <div class="text-group">
         <h1 class="shadow-text">Connor Pagtakhan</h1>
-        <h2 class="sub-text">Engineering & Artificial Intelligence</h2>
+        <h2 class="sub-text">Computer Engineering</h2>
       </div>
     </div>
     
@@ -12,7 +12,7 @@
       <p>Welcome to my interactive web portfolio. Feel free to drag windows around, explore my projects, and check out my hardware builds.</p>
       <ul>
         <li><strong>Location:</strong> Winnipeg, MB</li>
-        <li><strong>Focus:</strong> Embedded Systems, Control Theory, & Machine Learning</li>
+        <!-- <li><strong>Focus:</strong> Embedded Systems, Control Theory, & Machine Learning</li> -->
       </ul>
     </div>
   </div>

@@ -21,7 +21,7 @@ export function useWindowManager() {
     const newWindow = {
       id,
       title: appConfig.title || 'Application',
-      icon: appConfig.icon || '/assets/system/imepadsv.exe_14_200_0-0.png',
+      icon: appConfig.icon || '/assets/os/imepadsv.exe_14_200_0-0.png',
       // markRaw prevents Vue from making the component definition reactive!
       component: markRaw(appConfig.component), 
       props: appConfig.props || {},

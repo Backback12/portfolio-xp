@@ -3,14 +3,29 @@
     <div id="upper-screen" @mousedown.self="activeWindowId = null">
       <div id="desktop">
         <OsDesktopIcon 
-          img="/assets/system/smtpsnap.dll_14_9032_1038-0.png" 
+          img="/assets/os/newspaper.png" 
+          name="Title" 
+          @dblclick="openApp('title')"
+        />
+        <OsDesktopIcon 
+          img="/assets/os/smtpsnap.dll_14_9032_1038-0.png" 
           name="Achievements" 
           @dblclick="openApp('achievements')"
         />
         <OsDesktopIcon 
-          img="/assets/system/newspaper.png" 
+          img="/assets/os/newspaper.png" 
           name="Projects" 
           @dblclick="openApp('projects')"
+        />
+        <OsDesktopIcon 
+          img="/assets/os/newspaper.png" 
+          name="Drone Highlights" 
+          @dblclick="openApp('droneHighlights')"
+        />
+        <OsDesktopIcon 
+          img="/assets/os/newspaper.png" 
+          name="Egg Game" 
+          @dblclick="openApp('eggGame')"
         />
       </div>
 
@@ -44,7 +59,9 @@ const { windows, activeWindowId, openWindow } = useWindowManager()
 const Apps = {
   achievements: resolveComponent('AppsAchievements'),
   projects: resolveComponent('AppsProjects'),
-  title: resolveComponent('AppsTitle')
+  title: resolveComponent('AppsTitle'),
+  droneHighlights: resolveComponent('AppsDroneHighlights'),
+  eggGame: resolveComponent('AppsEggGame')
 }
 
 function openApp(appKey) {
@@ -52,7 +69,7 @@ function openApp(appKey) {
     openWindow({
       id: 'app-achievements',
       title: 'Achievements',
-      icon: '/assets/system/smtpsnap.dll_14_9032_1038-0.png',
+      icon: '/assets/os/smtpsnap.dll_14_9032_1038-0.png',
       component: Apps.achievements,
       width: 500,
       height: 400,
@@ -65,7 +82,7 @@ function openApp(appKey) {
     openWindow({
       id: 'app-projects',
       title: 'My Projects',
-      icon: '/assets/system/newspaper.png',
+      icon: '/assets/os/newspaper.png',
       component: Apps.projects,
       width: 600,
       height: 450,
@@ -74,8 +91,9 @@ function openApp(appKey) {
       // Example in pages/index.vue's openApp() function:
       tool_menu: {
         "Sort": [
-          { label: "Newest to Oldest", action: "sort_desc", checked: true },
-          { label: "Oldest to Newest", action: "sort_asc", checked: false }
+          { label: "Default", action: "sort_default", checked: true },
+          { label: "Newest to Oldest", action: "sort_desc", checked: false },
+          { label: "Oldest to Newest", action: "sort_asc", checked: false },
         ]
       }
     })
@@ -85,11 +103,43 @@ function openApp(appKey) {
     openWindow({
       id: 'app-title',
       title: 'Title',
-      icon: '/assets/system/newspaper.png',
+      icon: '/assets/os/newspaper.png',
       component: Apps.title,
       width: 600,
       height: 450,
       start_maximized: true,
+      // Custom toolbar example
+      tool_menu: {
+        
+      }
+    })
+  }
+
+  if (appKey === 'droneHighlights') {
+    openWindow({
+      id: 'app-droneHighlights',
+      title: 'Drone Highlights',
+      icon: '/assets/os/newspaper.png',
+      component: Apps.droneHighlights,
+      width: 600,
+      height: 450,
+      start_maximized: false,
+      // Custom toolbar example
+      tool_menu: {
+        
+      }
+    })
+  }
+
+  if (appKey === 'eggGame') {
+    openWindow({
+      id: 'app-eggGame',
+      title: 'Egg Game',
+      icon: '/assets/os/newspaper.png',
+      component: Apps.eggGame,
+      width: 384,
+      height: 256,
+      start_maximized: false,
       // Custom toolbar example
       tool_menu: {
         
@@ -153,7 +203,7 @@ body {
 #desktop {
   position: absolute;
   background-color: #007F7F;
-  background-image: url('/public/assets/system/wallpaper_0.jpg');
+  background-image: url('/public/assets/os/wallpaper_0.jpg');
   background-size: contain;
   /* background: url('/assets/images/wallpaper_0.jpg') #FF0000FF; */
   /* background-size: cover; */

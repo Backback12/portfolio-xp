@@ -1,7 +1,7 @@
 <template>
   <div class="projects-container">
     <div class="header">
-      <img src="/assets/system/smtpsnap.dll_14_9032_1038-0.png" class="header-icon"/>
+      <img src="/assets/os/smtpsnap.dll_14_9032_1038-0.png" class="header-icon"/>
       <div>
         <h1 class="main-title">Notable Projects</h1>
         <p class="subtitle">Notable projects</p>
@@ -12,7 +12,7 @@
         v-for="proj in sortedProjects" 
         :key="proj.id" 
         class="project-card"
-        :style="{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url(${proj.thumbnail})` }"
+        :style="{ backgroundImage: `linear-gradient(rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8)), url(${proj.thumbnail})` }"
         @click="selectedProject = proj"
       >
         <div class="card-content">
@@ -47,17 +47,26 @@ const props = defineProps({
 
 const { windows } = useWindowManager()
 const selectedProject = ref(null)
-const sortOrder = ref('desc') // default sorting
+const sortOrder = ref('default') // default sorting
 
 // Pre-populated with your specific projects
 const projects = ref([
   {
-    id: 7,
+    id: 8,
     title: 'Balance Bot',
     subtitle: 'ESP32, KiCad, 3D Printing, Controls System',
     date: '2025-2026',
-    thumbnail: '/assets/projects/micromouse_thumb.jpg', 
+    thumbnail: '/assets/projects/balance-bot.png', 
     image: '/assets/projects/micromouse_full.jpg',
+    description: ''
+  },
+  {
+    id: 7,
+    title: 'Micromouse',
+    subtitle: 'Capstone Project, ESP32, Controls System',
+    date: '2025-2026',
+    thumbnail: '', 
+    image: '',
     description: ''
   },
   {
@@ -92,7 +101,8 @@ const projects = ref([
     title: 'Arduino Gameboi',
     subtitle: '3D printed game console',
     date: '2021',
-    thumbnail: '/assets/projects/breathalyzer_thumb.jpg',
+    thumbnail: '/assets/projects/gameboi_0.jpg',
+    image: '/assets/projects/gameboi_playthrough.webp',
     description: 'Fully 3D printed console powered by Arduino Nano. Uses 128x64 OLED, 6 buttons, and cell battery powered.'
   },
   {
@@ -100,7 +110,7 @@ const projects = ref([
     title: 'Chimp Want Banana (Game Jam)',
     subtitle: 'Brackeys Game Jam 2021.1',
     date: '2021',
-    thumbnail: '/assets/projects/pcb_thumb.jpg',
+    thumbnail: '/assets/projects/chimp.jpg',
     description: 'https://alphaq.itch.io/chimp-want-banana'
   },
   {
@@ -108,7 +118,7 @@ const projects = ref([
     title: 'Bodyguard (Game Jam)',
     subtitle: 'Ludum Dare 46 Game Jam',
     date: '2020',
-    thumbnail: '/assets/projects/led_thumb.jpg',
+    thumbnail: '/assets/projects/bodyguard.png',
     description: 'https://alphaq.itch.io/bodyguard-ld46'
   }
 ])
@@ -117,7 +127,8 @@ const projects = ref([
 const sortedProjects = computed(() => {
   return [...projects.value].sort((a, b) => {
     if (sortOrder.value === 'desc') return b.date.localeCompare(a.date)
-    return a.date.localeCompare(b.date)
+    if (sortOrder.value === 'asc') return a.date.localeCompare(b.date)
+    return a.id < b.id;
   })
 })
 
@@ -135,6 +146,7 @@ onMounted(() => {
       // Update our local state to trigger the computed sorting
       if (clickedItem.action === 'sort_desc') sortOrder.value = 'desc'
       if (clickedItem.action === 'sort_asc') sortOrder.value = 'asc'
+      if (clickedItem.action === 'sort_default') sortOrder.value = 'default'
 
       // Update the visual checkmarks in the global window state
       myWindow.tool_menu['Sort'].forEach(item => {
@@ -150,9 +162,8 @@ onMounted(() => {
   display: flex;
   align-items: center;
   margin-bottom: 24px;
-  /* border-bottom: 2px solid #ECE9D8; */
   border-bottom: 2px solid #808080;
-  padding-bottom: 12px;
+  padding: 12px 0;
 }
 .header-icon {
   width: 48px;
@@ -173,7 +184,7 @@ onMounted(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: #ECE9D8;
+  background: #ece9d8;
 }
 .grid-view {
   display: grid;

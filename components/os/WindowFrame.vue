@@ -305,21 +305,35 @@ onBeforeUnmount(() => {
 
 
 .window .toolbar {
-  height: 18px;
-  min-height: 18px; 
+  height: 24px;
+  /* min-height: 18px;  */
   background: #EDE9D4;
   /* border: 1px outset #EDE9D4; */
   /* border-bottom: 1px outset #EDE9D4; */
   border-left: 4px solid #7998DF;
   border-right: 4px solid #7998DF;
+  /* border-bottom: 1px solid #D0D0D0; */
 
   display: flex;
+
+  position: relative;
 }
+.window .toolbar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 0;
+  border-bottom: 1px solid #D0D0D0;
+}
+
 .window .toolbar .button {
   /* display: flex; */
   /* align-items: center; */
   /* align-content: center; */
-  /* padding: 0 6px; */
+  padding: 2px 2px;
   /* margin: 1px; */
 
   font-size: 10px;
@@ -348,7 +362,9 @@ onBeforeUnmount(() => {
   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
   box-shadow: 2px 2px 1px 0 #646464;
   border: solid 1px #808080;
+  white-space: nowrap;
   z-index: 99999;
+
 }
 .toolbar-dropdown .dropdown-items a {
   color: black;
@@ -383,7 +399,7 @@ onBeforeUnmount(() => {
   border-bottom: 4px solid #7998DF;
 
   /* background-color: #FFFFFF; */
-  background-color: #FFF;
+  background-color: #ECE9D8;
 
   /* color: white; */
 

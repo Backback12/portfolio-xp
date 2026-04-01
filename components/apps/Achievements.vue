@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrapper">
     <div class="header">
-      <img src="/assets/system/smtpsnap.dll_14_9032_1038-0.png" class="header-icon"/>
+      <img src="/assets/os/smtpsnap.dll_14_9032_1038-0.png" class="header-icon"/>
       <div>
         <h1 class="main-title">Achievements Log</h1>
         <p class="subtitle">Notable events, conferences, and competitions</p>
@@ -58,10 +58,11 @@
         <summary>Leadership Roles</summary>
         <div class="folder-content">
           <ul class="role-list">
-            <li><strong>University of Manitoba Space Technology (UMRT)</strong> - Treasurer</li>
-            <li><strong>University of Manitoba Space Technology (UMRT)</strong> - Webmaster</li>
-            <li><strong>University of Manitoba Space Technology (UMRT)</strong> - Communications Operations Lead</li>
+            <li><strong>University of Manitoba Robotics Team (UMRT)</strong> - Treasurer</li>
+            <li><strong>University of Manitoba Robotics Team (UMRT)</strong> - Webmaster</li>
+            <li><strong>University of Manitoba Robotics Team (UMRT)</strong> - Communications Operations Lead</li>
             <li><strong>UMIEEE</strong> - Treasurer</li>
+            <li><strong>UMIEEE</strong> - Webmaster</li>
           </ul>
         </div>
       </details>
@@ -79,9 +80,8 @@
   display: flex;
   align-items: center;
   margin-bottom: 24px;
-  /* border-bottom: 2px solid #ECE9D8; */
   border-bottom: 2px solid #808080;
-  padding-bottom: 12px;
+  padding: 12px 0;
 }
 .header-icon {
   width: 48px;
