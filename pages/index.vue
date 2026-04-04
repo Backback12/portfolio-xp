@@ -55,6 +55,16 @@ import OsTaskbar from '~/components/os/Taskbar.vue'
 
 const { windows, activeWindowId, openWindow } = useWindowManager()
 
+
+useHead({
+  title: "Connor's Stuff - Projects and Builds",
+  meta: [
+    { name: 'description', content: "Connor Pagtakhan's portfolio featuring custom projects, builds, programs, and more." },
+    { property: 'og:title', content: "Connor's Stuff" }
+  ],
+  // bodyAttrs: { class: 'test' }
+})
+
 // Map your app keys to the actual Vue components
 const Apps = {
   achievements: resolveComponent('AppsAchievements'),
