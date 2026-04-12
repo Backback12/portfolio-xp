@@ -58,6 +58,7 @@
         <summary>Leadership Roles</summary>
         <div class="folder-content">
           <ul class="role-list">
+            <li><strong>University of Manitoba Robotics Team (UMRT)</strong> - Co-Founder</li>
             <li><strong>University of Manitoba Robotics Team (UMRT)</strong> - Treasurer</li>
             <li><strong>University of Manitoba Robotics Team (UMRT)</strong> - Webmaster</li>
             <li><strong>University of Manitoba Robotics Team (UMRT)</strong> - Communications Operations Lead</li>

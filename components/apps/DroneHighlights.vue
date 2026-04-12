@@ -2,7 +2,7 @@
   <div class="drone-container">
     <div class="gallery-header">
       <h2>Drone Highlights</h2>
-      <p>Footage taken at Canadian International Rover Competition 2024</p>
+      <p>Footage taken at Canadian International Rover Challenge 2024</p>
     </div>
     
     <div class="gallery-grid">

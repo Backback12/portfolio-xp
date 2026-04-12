@@ -55,11 +55,10 @@ import OsTaskbar from '~/components/os/Taskbar.vue'
 
 const { windows, activeWindowId, openWindow } = useWindowManager()
 
-
 useHead({
-  title: "Connor's Stuff - Projects and Builds",
+  title: "Connor's Stuff",
   meta: [
-    { name: 'description', content: "Connor Pagtakhan's portfolio featuring custom projects, builds, programs, and more." },
+    { name: 'description', content: "Connor Pagtakhan's web portfolio" },
     { property: 'og:title', content: "Connor's Stuff" }
   ],
   // bodyAttrs: { class: 'test' }
