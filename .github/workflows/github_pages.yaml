@@ -8,15 +8,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github_pages
     steps:
       - uses: actions/checkout@v4
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+        # check if secrets work...
+      - name: Debug Secret Presence
+        run: |
+          echo "URL is ${{ secrets.NUXT_PUBLIC_SUPABASE_URL }}"
+          echo "Key is ${{ secrets.NUXT_PUBLIC_ANON_KEY }}"
       # Pick your own package manager and build script
       - run: npm install
       - run: npx nuxt build --preset github_pages
+      # - run: npx nuxt generat
+        env:
+          # This maps your GitHub Secrets to the Env variables Nuxt expects
+          NUXT_PUBLIC_SUPABASE_URL: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL }}
+          NUXT_PUBLIC_ANON_KEY: ${{ secrets.NUXT_PUBLIC_ANON_KEY }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

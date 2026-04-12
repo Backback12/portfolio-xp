@@ -27,6 +27,11 @@
           name="Egg Game" 
           @dblclick="openApp('eggGame')"
         />
+        <OsDesktopIcon 
+          img="/assets/os/newspaper.png" 
+          name="Connect 4" 
+          @dblclick="openApp('connect4')"
+        />
       </div>
 
       <div id="windows">
@@ -70,7 +75,8 @@ const Apps = {
   projects: resolveComponent('AppsProjects'),
   title: resolveComponent('AppsTitle'),
   droneHighlights: resolveComponent('AppsDroneHighlights'),
-  eggGame: resolveComponent('AppsEggGame')
+  eggGame: resolveComponent('AppsEggGame'),
+  connect4: resolveComponent('AppsConnect4')
 }
 
 function openApp(appKey) {
@@ -155,12 +161,26 @@ function openApp(appKey) {
       }
     })
   }
+
+  if (appKey === 'connect4') {
+    openWindow({
+      id: 'app-connect4',
+      title: 'Connect Four',
+      icon: '/assets/os/newspaper.png',
+      component: Apps.connect4,
+      width: 500,
+      height: 640,
+      start_maximized: false,
+      tool_menu: {}
+    })
+  }
 }
 
 onMounted(() => {
   openApp('achievements')
   openApp('projects')
 
+  // openApp('connect4')
 
   openApp('title')
 })

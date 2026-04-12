@@ -18,5 +18,13 @@ export default defineNuxtConfig({
         // } 
       ],
     }
+  },
+
+  runtimeConfig: {
+    // Keys inside 'public' are exposed to the client
+    public: {
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL || '',
+      anonKey: process.env.NUXT_PUBLIC_ANON_KEY || '',
+    }
   }
 })
