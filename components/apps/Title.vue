@@ -9,9 +9,10 @@
     </div>
     
     <div class="info-box">
-      <p>Welcome to my interactive web portfolio. Feel free to drag windows around, explore my projects, and check out my hardware builds.</p>
+      <p>Welcome to my web portfolio! Feel free to explore my projects and builds</p>
+      <p><b>!!! WEBSITE IS A WORK IN PROGRESS !!!</b></p>
       <ul>
-        <li><strong>Location:</strong> Winnipeg, MB</li>
+        <!-- <li><strong>Location:</strong> Winnipeg, MB</li> -->
         <!-- <li><strong>Focus:</strong> Embedded Systems, Control Theory, & Machine Learning</li> -->
       </ul>
     </div>

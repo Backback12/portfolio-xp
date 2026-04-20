@@ -18,7 +18,7 @@
           @dblclick="openApp('projects')"
         />
         <OsDesktopIcon 
-          img="/assets/os/newspaper.png" 
+          img="/assets/os/drone.png" 
           name="Drone Highlights" 
           @dblclick="openApp('droneHighlights')"
         />
@@ -28,9 +28,14 @@
           @dblclick="openApp('eggGame')"
         />
         <OsDesktopIcon 
-          img="/assets/os/newspaper.png" 
+          img="/assets/os/connect4.png" 
           name="Connect 4" 
           @dblclick="openApp('connect4')"
+        />
+        <OsDesktopIcon 
+          img="/assets/os/newspaper.png" 
+          name="Blog" 
+          @dblclick="openApp('blog')"
         />
       </div>
 
@@ -76,7 +81,8 @@ const Apps = {
   title: resolveComponent('AppsTitle'),
   droneHighlights: resolveComponent('AppsDroneHighlights'),
   eggGame: resolveComponent('AppsEggGame'),
-  connect4: resolveComponent('AppsConnect4')
+  connect4: resolveComponent('AppsConnect4'),
+  blog: resolveComponent('AppsBlog')
 }
 
 function openApp(appKey) {
@@ -168,6 +174,19 @@ function openApp(appKey) {
       title: 'Connect Four',
       icon: '/assets/os/newspaper.png',
       component: Apps.connect4,
+      width: 500,
+      height: 640,
+      start_maximized: false,
+      tool_menu: {}
+    })
+  }
+
+  if (appKey === 'blog') {
+    openWindow({
+      id: 'app-blog',
+      title: `Connor's Blog`,
+      icon: '/assets/os/newspaper.png',
+      component: Apps.blog,
       width: 500,
       height: 640,
       start_maximized: false,

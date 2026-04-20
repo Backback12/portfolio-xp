@@ -43,13 +43,14 @@
                 <img loading="lazy" src="/public/assets/blog/circ_2025.webp"/>
               </div>
             </li>
+            <li><strong>WEC 2026</strong> - Edmonton, AB</li>
             <li>
               <strong>UMake 2026</strong> - Winnipeg, MB<br/>
               <span class="sub-note">> Organized and hosted first hardware hackathon at University of Manitoba</span>
               <img loading="lazy" src="/public/assets/blog/umake_2026_1.webp"/>
             </li>
-            <li><strong>WEC 2026</strong> - Edmonton, AB</li>
             <li><strong>RoboWars 2026</strong> - Montreal, QB</li>
+            <li><strong>CIRC 2026</strong> - Drumheller, AB</li>
           </ul>
         </div>
       </details>

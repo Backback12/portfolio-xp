@@ -259,11 +259,11 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  transition: all 0.2s ease;
+  transition: all 0.9s ease;
 }
 .project-card:hover {
   /* Lighter background on hover as requested */
-  background-blend-mode: screen;
+  /* background-blend-mode: screen; */
   border: 2px inset #FFF;
 }
 .card-content {
