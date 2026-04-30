@@ -2,40 +2,12 @@
   <div id="screen" @mousedown.self="activeWindowId = null">
     <div id="upper-screen" @mousedown.self="activeWindowId = null">
       <div id="desktop">
-        <OsDesktopIcon 
-          img="/assets/os/newspaper.png" 
-          name="Title" 
-          @dblclick="openApp('title')"
-        />
-        <OsDesktopIcon 
-          img="/assets/os/smtpsnap.dll_14_9032_1038-0.png" 
-          name="Achievements" 
-          @dblclick="openApp('achievements')"
-        />
-        <OsDesktopIcon 
-          img="/assets/os/newspaper.png" 
-          name="Projects" 
-          @dblclick="openApp('projects')"
-        />
-        <OsDesktopIcon 
-          img="/assets/os/drone.png" 
-          name="Drone Highlights" 
-          @dblclick="openApp('droneHighlights')"
-        />
-        <OsDesktopIcon 
-          img="/assets/os/newspaper.png" 
-          name="Egg Game" 
-          @dblclick="openApp('eggGame')"
-        />
-        <OsDesktopIcon 
-          img="/assets/os/connect4.png" 
-          name="Connect 4" 
-          @dblclick="openApp('connect4')"
-        />
-        <OsDesktopIcon 
-          img="/assets/os/newspaper.png" 
-          name="Blog" 
-          @dblclick="openApp('blog')"
+        <OsDesktopIcon
+          v-for="icon in desktopIcons"
+          :key="icon.app"
+          :img="icon.img"
+          :name="icon.name"
+          v-on="icon.handlers"
         />
       </div>
 
@@ -57,6 +29,7 @@
 <script setup>
 import { resolveComponent, onMounted } from 'vue'
 import { useWindowManager } from '~/composables/useWindowManager'
+import { useDoubleClick } from '~/composables/useDoubleClick'
 
 // Remember to import your icons if they are local, or use absolute paths as you did
 import OsDesktopIcon from '~/components/os/DesktopIcon.vue'
@@ -73,6 +46,11 @@ useHead({
   ],
   // bodyAttrs: { class: 'test' }
 })
+
+
+
+
+
 
 // Map your app keys to the actual Vue components
 const Apps = {
@@ -194,6 +172,22 @@ function openApp(appKey) {
     })
   }
 }
+
+
+
+const desktopIcons = [
+  { img: '/assets/os/newspaper.png',    name: 'Title',    app: 'title' },
+  { img: '/assets/os/smtpsnap.dll_14_9032_1038-0.png',    name: 'Achievements',    app: 'achievements' },
+  { img: '/assets/os/newspaper.png',    name: 'Projects',    app: 'projects' },
+  { img: '/assets/os/drone.png',    name: 'Drone Highlights',    app: 'droneHighlights' },
+  { img: '/assets/os/newspaper.png',    name: 'Egg Game',    app: 'eggGame' },
+  { img: '/assets/os/connect4.png',    name: 'Connect 4',    app: 'connect4' },
+].map(icon => ({
+  ...icon,
+  handlers: useDoubleClick(() => openApp(icon.app))
+}))
+
+
 
 onMounted(() => {
   openApp('achievements')

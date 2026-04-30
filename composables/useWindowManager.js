@@ -75,7 +75,7 @@ export function useWindowManager() {
   function toggleMaximize(id) {
     const target = windows.value.find(w => w.id === id)
     if (!target) return
-
+    
     if (target.isMaximized) {
       if (target.savedState) {
         target.x = target.savedState.x

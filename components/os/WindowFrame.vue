@@ -494,7 +494,8 @@ onBeforeUnmount(() => {
   transform: translate(0px, 0px) !important;
   width: 100% !important;
   /* Adjust the 30px to match the exact height of your taskbar */
-  height: calc(100% - 30px) !important; 
+  /* height: calc(100% - 30px) !important;  */
+  height: 100% !important;
   border-radius: 0;
 }
 .window.maximized .title-bar {

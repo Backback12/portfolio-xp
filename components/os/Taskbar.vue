@@ -93,4 +93,12 @@ onUnmounted(() => {
   background: #64a4ff; color: white; padding: 0 10px;
   display: flex; align-items: center; min-width: 64px; justify-content: flex-end;
 }
+
+
+/* collapse on small devices */
+@media (max-width: 768px) {
+  #taskbar {
+    display: none !important;
+  }
+}
 </style>
